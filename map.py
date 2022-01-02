@@ -23,9 +23,6 @@ class Map:
     def __init__(self, map_number: int):
         self.tileset = pygame.image.load(Map.config["Tilemap"]["tilemap_path"]).convert_alpha()
         self.map_number = map_number
-        self.spawn = 4
-        self.checkpoints = []
-        self.finish_tiles = []
         self.dynamic_map = []
         self.static_map = []
         self.width, self.height = None, None
@@ -49,6 +46,7 @@ class Map:
 
     def generateSurface(self) -> pygame.Surface:
         res = pygame.Surface((20 * (self.width + 10), 20 * (self.height + 10)))
+        checkpoint_tiles, finish_tiles, spawn_tile = [], [], None
         res.fill((216, 194, 255))
         tile_height, tile_width = int(Map.config["Tilemap"]["tile_height"]), int(Map.config["Tilemap"]["tile_width"])
         for row_index in range(self.height):
@@ -62,19 +60,24 @@ class Map:
                             res.blit(self.tileset.subsurface(tile_width * 2, 0, tile_width, tile_height),
                                      (tile_width * column_index, tile_height * row_index))
                         Map.drawLineIfThereIsWall(res, self.static_map, row_index, column_index)
-                    case 2 | 3 | 4:
+                    case 2:
                         res.blit(self.tileset.subsurface(tile_width * 0, 0, tile_width, tile_height),
                                  (tile_width * column_index, tile_height * row_index))
                         Map.drawLineIfThereIsWall(res, self.static_map, row_index, column_index)
-                    case 2:
-                        self.checkpoints.append(pygame.Rect(tile_width * column_index, tile_height * row_index,
+                        checkpoint_tiles.append(pygame.Rect(tile_width * column_index, tile_height * row_index,
                                                             tile_width, tile_height))
                     case 3:
-                        self.spawn = (tile_width * column_index, tile_height * row_index)
+                        res.blit(self.tileset.subsurface(tile_width * 0, 0, tile_width, tile_height),
+                                 (tile_width * column_index, tile_height * row_index))
+                        Map.drawLineIfThereIsWall(res, self.static_map, row_index, column_index)
+                        spawn_tile = pygame.Rect(tile_width * column_index, tile_height * row_index, tile_width, tile_height)
                     case 4:
-                        self.finish_tiles.append(pygame.Rect(tile_width * column_index, tile_height * row_index,
+                        res.blit(self.tileset.subsurface(tile_width * 0, 0, tile_width, tile_height),
+                                 (tile_width * column_index, tile_height * row_index))
+                        Map.drawLineIfThereIsWall(res, self.static_map, row_index, column_index)
+                        finish_tiles.append(pygame.Rect(tile_width * column_index, tile_height * row_index,
                                                              tile_width, tile_height))
-        return res
+        return res, spawn_tile, checkpoint_tiles, finish_tiles
 
     @staticmethod
     def drawLineIfThereIsWall(res: pygame.Surface, static_map: list, row_index: int, column_index: int):

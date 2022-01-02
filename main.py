@@ -11,7 +11,7 @@ clock = pygame.time.Clock()
 while True:
     map_number = 1
     cur_map = Map(map_number)
-    cur_map_surface = cur_map.generateSurface()
+    cur_map_surface, spawn, checkpoints, finish_tiles = cur_map.generateSurface()
     while True:
         mainsurf.fill((216, 194, 255))
         mainsurf.blit(cur_map_surface, (0, 0))
