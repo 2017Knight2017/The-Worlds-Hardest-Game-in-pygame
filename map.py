@@ -46,12 +46,15 @@ class Map:
 
     def generateSurface(self) -> pygame.Surface:
         res = pygame.Surface((20 * (self.width + 10), 20 * (self.height + 10)))
-        checkpoint_tiles, finish_tiles, spawn_tile = [], [], None
+        walls_tiles, checkpoint_tiles, finish_tiles, spawn_tile = [], [], [], None
         res.fill((216, 194, 255))
         tile_height, tile_width = int(Map.config["Tilemap"]["tile_height"]), int(Map.config["Tilemap"]["tile_width"])
         for row_index in range(self.height):
             for column_index in range(self.width):
                 match int(self.static_map[row_index][column_index]):
+                    case 0:
+                        walls_tiles.append(pygame.Rect(tile_width * column_index, tile_height * row_index,
+                                                       tile_width, tile_height))
                     case 1:
                         if row_index % 2 == column_index % 2:
                             res.blit(self.tileset.subsurface(tile_width, 0, tile_width, tile_height),
@@ -78,7 +81,7 @@ class Map:
                         Map.drawLineIfThereIsWall(res, self.static_map, row_index, column_index)
                         finish_tiles.append(pygame.Rect(tile_width * column_index, tile_height * row_index,
                                                         tile_width, tile_height))
-        return res, spawn_tile, checkpoint_tiles, finish_tiles
+        return res, walls_tiles, spawn_tile, checkpoint_tiles, finish_tiles
 
     @staticmethod
     def drawLineIfThereIsWall(res: pygame.Surface, static_map: list, row_index: int, column_index: int):
