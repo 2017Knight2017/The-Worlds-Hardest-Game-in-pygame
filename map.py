@@ -77,7 +77,7 @@ class Map:
         return res
 
     @staticmethod
-    def drawLineIfThereIsWall(res, static_map, row_index, column_index):
+    def drawLineIfThereIsWall(res: pygame.Surface, static_map: list, row_index: int, column_index: int):
         if static_map[row_index - 1][column_index] == "0":  # Top
             pygame.draw.line(res, (0, 0, 0), (20 * column_index, 20 * row_index),
                              (20 * (column_index + 1), 20 * row_index), 2)
