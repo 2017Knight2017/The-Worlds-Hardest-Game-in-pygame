@@ -70,13 +70,14 @@ class Map:
                         res.blit(self.tileset.subsurface(tile_width * 0, 0, tile_width, tile_height),
                                  (tile_width * column_index, tile_height * row_index))
                         Map.drawLineIfThereIsWall(res, self.static_map, row_index, column_index)
-                        spawn_tile = pygame.Rect(tile_width * column_index, tile_height * row_index, tile_width, tile_height)
+                        spawn_tile = pygame.Rect(tile_width * column_index, tile_height * row_index, tile_width,
+                                                 tile_height)
                     case 4:
                         res.blit(self.tileset.subsurface(tile_width * 0, 0, tile_width, tile_height),
                                  (tile_width * column_index, tile_height * row_index))
                         Map.drawLineIfThereIsWall(res, self.static_map, row_index, column_index)
                         finish_tiles.append(pygame.Rect(tile_width * column_index, tile_height * row_index,
-                                                             tile_width, tile_height))
+                                                        tile_width, tile_height))
         return res, spawn_tile, checkpoint_tiles, finish_tiles
 
     @staticmethod
