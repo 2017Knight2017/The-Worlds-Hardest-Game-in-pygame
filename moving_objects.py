@@ -23,6 +23,7 @@ class Player(Gameobject):
                              int(Player.config["Tilemap"]["tile_height"]),
                              int(Player.config["Tilemap"]["tile_width"]),
                              int(Player.config["Tilemap"]["tile_height"])))
+        self.respawn_pos = None
 
     def moveUp(self):
         self.rect.y -= int(Player.config["Player"]["speed"])
@@ -35,6 +36,10 @@ class Player(Gameobject):
 
     def moveRight(self):
         self.rect.x += int(Player.config["Player"]["speed"])
+
+    def update(self, checkpoints: list[pygame.Rect], finish_tiles: list[pygame.Rect]):
+        for i in checkpoints:
+            if i.colliderect(self): self.respawn_pos = i.centerx, i.centery
 
 
 class Enemy(Gameobject):
