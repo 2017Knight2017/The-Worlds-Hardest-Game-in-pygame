@@ -9,15 +9,15 @@ class Gameobject(pygame.sprite.Sprite):
             self.image = image.load(filename).convert_alpha()
         elif image:
             self.image = image.convert_alpha()
-        self.rect = self.image.get_rect(topleft=(xy[0], xy[1]))
+        self.rect = self.image.get_rect(center=(xy[0], xy[1]))
 
 
 class Player(Gameobject):
     config = ConfigParser()
     config.read("options.ini")
 
-    def __init__(self):
-        super().__init__((1000, 1000),
+    def __init__(self, spawn_tile_xy: tuple[int, int]):
+        super().__init__(spawn_tile_xy,
                          image=pygame.image.load(Player.config["Tilemap"]["tilemap_path"]).convert_alpha().subsurface(
                              int(Player.config["Tilemap"]["tile_width"]) * 0,
                              int(Player.config["Tilemap"]["tile_height"]),
@@ -39,7 +39,9 @@ class Player(Gameobject):
 
     def update(self, checkpoints: list[pygame.Rect], finish_tiles: list[pygame.Rect]):
         for i in checkpoints:
-            if i.colliderect(self): self.respawn_pos = i.centerx, i.centery
+            if i.colliderect(self): self.respawn_pos = i.center
+        if not self.rect.collidelist(finish_tiles):
+            pass
 
 
 class Enemy(Gameobject):

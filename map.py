@@ -10,12 +10,6 @@ class Map:
     2: Checkpoint
     3: Start
     4: Finish
-
-    Enemy data standard: [id: str,
-                          type: from_to | circle,
-                          begin_x: int, begin_y: int,
-                          end_x: int, end_y: int,
-                          speed: int]
     """
     config = ConfigParser()
     config.read("options.ini")
@@ -86,15 +80,16 @@ class Map:
     @classmethod
     def drawLineIfThereIsWall(cls, res: pygame.Surface, static_map: list, row_index: int, column_index: int):
         tile_width, tile_height = int(cls.config["Tilemap"]["tile_width"]), int(cls.config["Tilemap"]["tile_height"])
+        BLACK = list(map(int, cls.config["Colors"]["black"].split(", ")))
         if static_map[row_index - 1][column_index] == "0":  # Top
-            pygame.draw.line(res, (0, 0, 0), (tile_width * column_index, tile_height * row_index),
+            pygame.draw.line(res, BLACK, (tile_width * column_index, tile_height * row_index),
                              (tile_width * (column_index + 1), tile_height * row_index), 3)
         if static_map[row_index][column_index - 1] == "0":  # Left
-            pygame.draw.line(res, (0, 0, 0), (tile_width * column_index, tile_height * row_index),
+            pygame.draw.line(res, BLACK, (tile_width * column_index, tile_height * row_index),
                              (tile_width * column_index, tile_height * (row_index + 1)), 3)
         if static_map[row_index + 1][column_index] == "0":  # Bottom
-            pygame.draw.line(res, (0, 0, 0), (tile_width * column_index, tile_height * (row_index + 1)),
+            pygame.draw.line(res, BLACK, (tile_width * column_index, tile_height * (row_index + 1)),
                              (tile_width * (column_index + 1), tile_height * (row_index + 1)), 3)
         if static_map[row_index][column_index + 1] == "0":  # Right
-            pygame.draw.line(res, (0, 0, 0), (tile_width * (column_index + 1), tile_height * row_index),
+            pygame.draw.line(res, BLACK, (tile_width * (column_index + 1), tile_height * row_index),
                              (tile_width * (column_index + 1), tile_height * (row_index + 1)), 3)
