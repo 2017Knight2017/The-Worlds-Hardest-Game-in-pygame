@@ -28,28 +28,28 @@ while True:
         if keys[pygame.K_LEFT] and plr.rect.x > 0:
             g = True
             for i in walls_tiles:
-                if i.collidepoint(plr.rect.left + int(Player.config["Player"]["speed"]), plr.rect.centery):
+                if i.collidepoint(plr.rect.left - int(Player.config["Player"]["speed"]), plr.rect.centery):
                     g = False
                     break
             if g: plr.moveLeft()
         if keys[pygame.K_RIGHT] and plr.rect.x < (640 - plr.rect.width):
             g = True
             for i in walls_tiles:
-                if i.collidepoint(plr.rect.right - int(Player.config["Player"]["speed"]) - 3, plr.rect.centery):
+                if i.collidepoint(plr.rect.right + int(Player.config["Player"]["speed"]), plr.rect.centery):
                     g = False
                     break
             if g: plr.moveRight()
         if keys[pygame.K_UP] and plr.rect.y > 0:
             g = True
             for i in walls_tiles:
-                if i.collidepoint(plr.rect.centerx, plr.rect.top + int(Player.config["Player"]["speed"]) + 1):
+                if i.collidepoint(plr.rect.centerx, plr.rect.top - int(Player.config["Player"]["speed"])):
                     g = False
                     break
             if g: plr.moveUp()
         if keys[pygame.K_DOWN] and plr.rect.y < (480 - plr.rect.height):
             g = True
             for i in walls_tiles:
-                if i.collidepoint(plr.rect.centerx, plr.rect.bottom - int(Player.config["Player"]["speed"]) - 4):
+                if i.collidepoint(plr.rect.centerx, plr.rect.bottom + int(Player.config["Player"]["speed"])):
                     g = False
                     break
             if g: plr.moveDown()

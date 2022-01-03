@@ -83,17 +83,18 @@ class Map:
                                                         tile_width, tile_height))
         return res, walls_tiles, spawn_tile, checkpoint_tiles, finish_tiles
 
-    @staticmethod
-    def drawLineIfThereIsWall(res: pygame.Surface, static_map: list, row_index: int, column_index: int):
+    @classmethod
+    def drawLineIfThereIsWall(cls, res: pygame.Surface, static_map: list, row_index: int, column_index: int):
+        tile_width, tile_height = int(cls.config["Tilemap"]["tile_width"]), int(cls.config["Tilemap"]["tile_height"])
         if static_map[row_index - 1][column_index] == "0":  # Top
-            pygame.draw.line(res, (0, 0, 0), (20 * column_index, 20 * row_index),
-                             (20 * (column_index + 1), 20 * row_index), 2)
+            pygame.draw.line(res, (0, 0, 0), (tile_width * column_index, tile_height * row_index),
+                             (tile_width * (column_index + 1), tile_height * row_index), 3)
         if static_map[row_index][column_index - 1] == "0":  # Left
-            pygame.draw.line(res, (0, 0, 0), (20 * column_index, 20 * row_index),
-                             (20 * column_index, 20 * (row_index + 1)), 2)
+            pygame.draw.line(res, (0, 0, 0), (tile_width * column_index, tile_height * row_index),
+                             (tile_width * column_index, tile_height * (row_index + 1)), 3)
         if static_map[row_index + 1][column_index] == "0":  # Bottom
-            pygame.draw.line(res, (0, 0, 0), (20 * column_index, 20 * (row_index + 1)),
-                             (20 * (column_index + 1), 20 * (row_index + 1)), 2)
+            pygame.draw.line(res, (0, 0, 0), (tile_width * column_index, tile_height * (row_index + 1)),
+                             (tile_width * (column_index + 1), tile_height * (row_index + 1)), 3)
         if static_map[row_index][column_index + 1] == "0":  # Right
-            pygame.draw.line(res, (0, 0, 0), (20 * (column_index + 1), 20 * row_index),
-                             (20 * (column_index + 1), 20 * (row_index + 1)), 2)
+            pygame.draw.line(res, (0, 0, 0), (tile_width * (column_index + 1), tile_height * row_index),
+                             (tile_width * (column_index + 1), tile_height * (row_index + 1)), 3)

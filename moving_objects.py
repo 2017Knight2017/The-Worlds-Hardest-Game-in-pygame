@@ -21,8 +21,8 @@ class Player(Gameobject):
                          image=pygame.image.load(Player.config["Tilemap"]["tilemap_path"]).convert_alpha().subsurface(
                              int(Player.config["Tilemap"]["tile_width"]) * 0,
                              int(Player.config["Tilemap"]["tile_height"]),
-                             int(Player.config["Tilemap"]["tile_width"]),
-                             int(Player.config["Tilemap"]["tile_height"])))
+                             int(Player.config["Tilemap"]["sprite_width"]),
+                             int(Player.config["Tilemap"]["sprite_height"])))
         self.respawn_pos = None
 
     def moveUp(self):
