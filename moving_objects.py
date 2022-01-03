@@ -19,7 +19,7 @@ class Player(Gameobject):
     def __init__(self, spawn_tile_xy: tuple[int, int]):
         super().__init__(spawn_tile_xy,
                          image=pygame.image.load(Player.config["Tilemap"]["tilemap_path"]).convert_alpha().subsurface(
-                             int(Player.config["Tilemap"]["tile_width"]) * 0,
+                             int(Player.config["Tilemap"]["sprite_width"]) * 0,
                              int(Player.config["Tilemap"]["tile_height"]),
                              int(Player.config["Tilemap"]["sprite_width"]),
                              int(Player.config["Tilemap"]["sprite_height"])))
@@ -45,9 +45,31 @@ class Player(Gameobject):
 
 
 class Enemy(Gameobject):
+    """
+    color=1 → blue enemy
+    color=2 → pink enemy
+    color=3 → red enemy
+    """
+    config = ConfigParser()
+    config.read("options.ini")
 
-    def __init__(self, xy: tuple[int, int], filename="", image=None):
-        if filename:
-            super().__init__(xy, filename=filename)
-        elif image:
-            super().__init__(xy, image=image)
+    def __init__(self, xy: tuple[int, int], color: int = 1):
+        super().__init__(xy,
+                         image=pygame.image.load(Player.config["Tilemap"]["tilemap_path"]).convert_alpha().subsurface(
+                             int(Player.config["Tilemap"]["sprite_width"]) * color,
+                             int(Player.config["Tilemap"]["tile_height"]),
+                             int(Player.config["Tilemap"]["sprite_width"]),
+                             int(Player.config["Tilemap"]["sprite_height"])))
+
+
+class Coin(Gameobject):
+    config = ConfigParser()
+    config.read("options.ini")
+
+    def __init__(self, xy: tuple[int, int]):
+        super().__init__(xy,
+                         image=pygame.image.load(Player.config["Tilemap"]["tilemap_path"]).convert_alpha().subsurface(
+                             int(Player.config["Tilemap"]["sprite_width"]) * 4,
+                             int(Player.config["Tilemap"]["tile_height"]),
+                             int(Player.config["Tilemap"]["sprite_width"]),
+                             int(Player.config["Tilemap"]["sprite_height"])))

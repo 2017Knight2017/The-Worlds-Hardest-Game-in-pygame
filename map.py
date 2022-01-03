@@ -1,5 +1,6 @@
 import pygame
 from configparser import ConfigParser
+from json import load
 
 
 class Map:
@@ -18,37 +19,37 @@ class Map:
         self.tileset = pygame.image.load(Map.config["Tilemap"]["tilemap_path"]).convert_alpha()
         self.map_number = map_number
         self.dynamic_map = []
+        self.walls_tiles = []
+        self.spawn_tile = None
+        self.checkpoint_tiles = []
+        self.finish_tiles = []
+        self.coins_coords = []
         self.static_map = []
-        self.width, self.height = None, None
+        self.map_width, self.map_height = None, None
         self.parseMap()
 
     def parseMap(self):
         with open(f"maps/MAP{'0' * (self.map_number < 10)}{self.map_number}-static.map", "r") as static:
-            self.width, self.height = map(int, static.readline().split("x"))
-            for i in range(self.height):
+            self.map_width, self.map_height = map(int, static.readline().split("x"))
+            for _ in range(self.map_height):
                 self.static_map.append(static.readline().split())
-        with open(f"maps/MAP{'0' * (self.map_number < 10)}{self.map_number}-dynamic.map", "r") as dynamic:
-            for i in dynamic:
-                arr = i.split(", ")
-                self.dynamic_map.append({
-                    "id": arr[0],
-                    "type": arr[1],
-                    "begin_pos": (int(arr[2]), int(arr[3])),
-                    "end_pos": (int(arr[4]), int(arr[5])),
-                    "speed": int(arr[6])
-                })
+        with open(f"maps/MAP{'0' * (self.map_number < 10)}{self.map_number}-dynamic.json", "r") as raw_dynamic:
+            dynamic = load(raw_dynamic)
+            for i in dynamic.keys():
+                if dynamic[i]["type"] == "coin":
+                    self.coins_coords.append((dynamic[i]["tile_pos"][0] * int(Map.config["Tilemap"]["tile_width"]) + int(Map.config["Tilemap"]["tile_width"]) // 2,
+                                              dynamic[i]["tile_pos"][1] * int(Map.config["Tilemap"]["tile_height"]) + int(Map.config["Tilemap"]["tile_height"]) // 2))
 
     def generateSurface(self) -> pygame.Surface:
-        res = pygame.Surface((20 * (self.width + 10), 20 * (self.height + 10)))
-        walls_tiles, checkpoint_tiles, finish_tiles, spawn_tile = [], [], [], None
+        res = pygame.Surface((20 * (self.map_width + 10), 20 * (self.map_height + 10)))
         res.fill((216, 194, 255))
         tile_height, tile_width = int(Map.config["Tilemap"]["tile_height"]), int(Map.config["Tilemap"]["tile_width"])
-        for row_index in range(self.height):
-            for column_index in range(self.width):
+        for row_index in range(self.map_height):
+            for column_index in range(self.map_width):
                 match int(self.static_map[row_index][column_index]):
                     case 0:
-                        walls_tiles.append(pygame.Rect(tile_width * column_index, tile_height * row_index,
-                                                       tile_width, tile_height))
+                        self.walls_tiles.append(pygame.Rect(tile_width * column_index, tile_height * row_index,
+                                                            tile_width, tile_height))
                     case 1:
                         if row_index % 2 == column_index % 2:
                             res.blit(self.tileset.subsurface(tile_width, 0, tile_width, tile_height),
@@ -61,21 +62,21 @@ class Map:
                         res.blit(self.tileset.subsurface(tile_width * 0, 0, tile_width, tile_height),
                                  (tile_width * column_index, tile_height * row_index))
                         Map.drawLineIfThereIsWall(res, self.static_map, row_index, column_index)
-                        checkpoint_tiles.append(pygame.Rect(tile_width * column_index, tile_height * row_index,
-                                                            tile_width, tile_height))
+                        self.checkpoint_tiles.append(pygame.Rect(tile_width * column_index, tile_height * row_index,
+                                                                 tile_width, tile_height))
                     case 3:
                         res.blit(self.tileset.subsurface(tile_width * 0, 0, tile_width, tile_height),
                                  (tile_width * column_index, tile_height * row_index))
                         Map.drawLineIfThereIsWall(res, self.static_map, row_index, column_index)
-                        spawn_tile = pygame.Rect(tile_width * column_index, tile_height * row_index, tile_width,
-                                                 tile_height)
+                        self.spawn_tile = pygame.Rect(tile_width * column_index, tile_height * row_index, tile_width,
+                                                      tile_height)
                     case 4:
                         res.blit(self.tileset.subsurface(tile_width * 0, 0, tile_width, tile_height),
                                  (tile_width * column_index, tile_height * row_index))
                         Map.drawLineIfThereIsWall(res, self.static_map, row_index, column_index)
-                        finish_tiles.append(pygame.Rect(tile_width * column_index, tile_height * row_index,
-                                                        tile_width, tile_height))
-        return res, walls_tiles, spawn_tile, checkpoint_tiles, finish_tiles
+                        self.finish_tiles.append(pygame.Rect(tile_width * column_index, tile_height * row_index,
+                                                             tile_width, tile_height))
+        return res
 
     @classmethod
     def drawLineIfThereIsWall(cls, res: pygame.Surface, static_map: list, row_index: int, column_index: int):
