@@ -1,1 +1,22 @@
-{}
+{
+  "0001": {
+        "type": "coin",
+        "tile_pos": [3, 7],
+        "tile_center": true
+    },
+  "0002": {
+        "type": "coin",
+        "tile_pos": [7, 7],
+        "tile_center": true
+    },
+  "0003": {
+        "type": "coin",
+        "tile_pos": [11, 7],
+        "tile_center": true
+    },
+  "0004": {
+        "type": "coin",
+        "tile_pos": [15, 7],
+        "tile_center": true
+    }
+}

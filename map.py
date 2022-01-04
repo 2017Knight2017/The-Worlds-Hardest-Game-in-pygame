@@ -37,8 +37,8 @@ class Map:
             dynamic = load(raw_dynamic)
             for i in dynamic.keys():
                 if dynamic[i]["type"] == "coin":
-                    self.coins_coords.append((dynamic[i]["tile_pos"][0] * int(Map.config["Tilemap"]["tile_width"]) + int(Map.config["Tilemap"]["tile_width"]) // 2,
-                                              dynamic[i]["tile_pos"][1] * int(Map.config["Tilemap"]["tile_height"]) + int(Map.config["Tilemap"]["tile_height"]) // 2))
+                    self.coins_coords.append((dynamic[i]["tile_pos"][0] * int(Map.config["Tilemap"]["tile_width"]) + (int(Map.config["Tilemap"]["tile_width"]) // 2) * dynamic[i]["tile_center"],
+                                              dynamic[i]["tile_pos"][1] * int(Map.config["Tilemap"]["tile_height"]) + (int(Map.config["Tilemap"]["tile_height"]) // 2) * dynamic[i]["tile_center"]))
 
     def generateSurface(self) -> pygame.Surface:
         res = pygame.Surface((20 * (self.map_width + 10), 20 * (self.map_height + 10)))

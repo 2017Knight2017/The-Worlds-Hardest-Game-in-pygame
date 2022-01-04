@@ -1,7 +1,7 @@
 {
   "0001": {
         "type": "coin",
-        "tile_pos": [9, 4],
+        "tile_pos": [18, 10],
         "tile_center": false
     }
 }
