@@ -24,6 +24,7 @@ class Player(Gameobject):
                              int(Player.config["Tilemap"]["sprite_width"]),
                              int(Player.config["Tilemap"]["sprite_height"])))
         self.respawn_pos = None
+        self.next_level = False
 
     def moveUp(self):
         self.rect.y -= int(Player.config["Player"]["speed"])
@@ -37,11 +38,10 @@ class Player(Gameobject):
     def moveRight(self):
         self.rect.x += int(Player.config["Player"]["speed"])
 
-    def update(self, checkpoints: list[pygame.Rect], finish_tiles: list[pygame.Rect]):
+    def update(self, checkpoints: list[pygame.Rect], finish_tiles: list[pygame.Rect], coins: pygame.sprite.Group):
         for i in checkpoints:
             if i.colliderect(self): self.respawn_pos = i.center
-        if not self.rect.collidelist(finish_tiles):
-            pass
+        self.next_level = not self.rect.collidelist(finish_tiles) and not coins.sprites()
 
 
 class Enemy(Gameobject):

@@ -9,9 +9,9 @@ config.read("options.ini")
 mainsurf = pygame.display.set_mode((640, 480))
 pygame.display.set_caption("ddddd")
 clock = pygame.time.Clock()
+map_number = 0
 
 while True:
-    map_number = 0
     cur_map = Map(map_number)
     cur_map_surface = cur_map.generateSurface()
     plr = Player(cur_map.spawn_tile.center)
@@ -56,11 +56,12 @@ while True:
                     break
             if g: plr.moveDown()
 
-        """if exists(f"maps/MAP{'0' * (map_number < 10)}{map_number}-static.map") and exists(
-                  f"maps/MAP{'0' * (map_number < 10)}{map_number}-dynamic.map"):
+        pygame.sprite.spritecollide(plr, coins, True)
+        if plr.next_level:
             map_number += 1
-            break"""
+            break
+
         coins.draw(mainsurf)
-        plr.update(cur_map.checkpoint_tiles, cur_map.finish_tiles)
+        plr.update(cur_map.checkpoint_tiles, cur_map.finish_tiles, coins)
         clock.tick(int(config["General"]["fps"]))
         pygame.display.update()
