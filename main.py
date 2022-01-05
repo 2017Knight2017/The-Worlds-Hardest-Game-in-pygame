@@ -15,9 +15,8 @@ while True:
     cur_map = Map(map_number)
     cur_map_surface = cur_map.generateSurface()
     plr = Player(cur_map.spawn_tile.center)
-    coins = pygame.sprite.Group()
-    for i in cur_map.coins_coords:
-        coins.add(Coin(i))
+    coins = pygame.sprite.Group([Coin(i) for i in cur_map.coins_coords])
+    enemies = pygame.sprite.Group([Enemy(i["coords"][0], i["color"], i["speed"]) for i in cur_map.enemies_data])
     while True:
         mainsurf.fill(list(map(int, config["Colors"]["background"].split(", "))))
         mainsurf.blit(cur_map_surface, (0, 0))
@@ -57,10 +56,12 @@ while True:
             if g: plr.moveDown()
 
         pygame.sprite.spritecollide(plr, coins, True)
+
         if plr.next_level:
             map_number += 1
             break
 
+        enemies.draw(mainsurf)
         coins.draw(mainsurf)
         plr.update(cur_map.checkpoint_tiles, cur_map.finish_tiles, coins)
         clock.tick(int(config["General"]["fps"]))

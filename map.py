@@ -24,6 +24,7 @@ class Map:
         self.checkpoint_tiles = []
         self.finish_tiles = []
         self.coins_coords = []
+        self.enemies_data = []
         self.static_map = []
         self.map_width, self.map_height = None, None
         self.parseMap()
@@ -37,12 +38,20 @@ class Map:
             dynamic = load(raw_dynamic)
             for i in dynamic.keys():
                 if dynamic[i]["type"] == "coin":
-                    self.coins_coords.append((dynamic[i]["tile_pos"][0] * int(Map.config["Tilemap"]["tile_width"]) + (int(Map.config["Tilemap"]["tile_width"]) // 2) * dynamic[i]["tile_center"],
-                                              dynamic[i]["tile_pos"][1] * int(Map.config["Tilemap"]["tile_height"]) + (int(Map.config["Tilemap"]["tile_height"]) // 2) * dynamic[i]["tile_center"]))
+                    self.coins_coords.append((dynamic[i]["tile_pos"][0] * int(Map.config["Tilemap"]["tile_width"]),
+                                              dynamic[i]["tile_pos"][1] * int(Map.config["Tilemap"]["tile_height"])))
+                elif dynamic[i]["type"] == "enemy":
+                    self.enemies_data.append(
+                        {"coords": ((dynamic[i]["start_tile_pos"][0] * int(Map.config["Tilemap"]["tile_width"]),
+                                     dynamic[i]["start_tile_pos"][1] * int(Map.config["Tilemap"]["tile_height"])),
+                                    (dynamic[i]["finish_tile_pos"][0] * int(Map.config["Tilemap"]["tile_width"]),
+                                     dynamic[i]["finish_tile_pos"][1] * int(Map.config["Tilemap"]["tile_height"]))),
+                         "color": dynamic[i]["color"],
+                         "speed": dynamic[i]["speed"]})
 
     def generateSurface(self) -> pygame.Surface:
-        res = pygame.Surface((20 * (self.map_width + 10), 20 * (self.map_height + 10)))
-        res.fill((216, 194, 255))
+        res = pygame.Surface((int(Map.config["Tilemap"]["tile_width"]) * self.map_width, int(Map.config["Tilemap"]["tile_height"]) * self.map_height))
+        res.fill(list(map(int, Map.config["Colors"]["background"].split(", "))))
         tile_height, tile_width = int(Map.config["Tilemap"]["tile_height"]), int(Map.config["Tilemap"]["tile_width"])
         for row_index in range(self.map_height):
             for column_index in range(self.map_width):

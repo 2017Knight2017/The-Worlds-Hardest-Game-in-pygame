@@ -1,1 +1,10 @@
-{}
+{
+  "0001": {
+    "type": "enemy",
+    "movement_type": "from_to",
+    "start_tile_pos": [7, 3],
+    "finish_tile_pos": [7, 6],
+    "speed": 1.0,
+    "color": 1
+  }
+}

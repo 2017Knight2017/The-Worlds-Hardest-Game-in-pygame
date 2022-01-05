@@ -53,13 +53,19 @@ class Enemy(Gameobject):
     config = ConfigParser()
     config.read("options.ini")
 
-    def __init__(self, xy: tuple[int, int], color: int = 1):
+    def __init__(self, xy: tuple[int, int], color: int, speed: float):
         super().__init__(xy,
                          image=pygame.image.load(Player.config["Tilemap"]["tilemap_path"]).convert_alpha().subsurface(
                              int(Player.config["Tilemap"]["sprite_width"]) * color,
                              int(Player.config["Tilemap"]["tile_height"]),
                              int(Player.config["Tilemap"]["sprite_width"]),
                              int(Player.config["Tilemap"]["sprite_height"])))
+        self.speed = speed
+        self.state = 0
+
+    def fromTo(self, start: tuple[int, int], finish: tuple[int, int]):
+        if start[0] == finish[0]:
+            pass
 
 
 class Coin(Gameobject):
