@@ -42,10 +42,10 @@ class Map:
                                               dynamic[i]["tile_pos"][1] * int(Map.config["Tilemap"]["tile_height"])))
                 elif dynamic[i]["type"] == "enemy":
                     self.enemies_data.append(
-                        {"coords": ((dynamic[i]["start_tile_pos"][0] * int(Map.config["Tilemap"]["tile_width"]),
-                                     dynamic[i]["start_tile_pos"][1] * int(Map.config["Tilemap"]["tile_height"])),
-                                    (dynamic[i]["finish_tile_pos"][0] * int(Map.config["Tilemap"]["tile_width"]),
-                                     dynamic[i]["finish_tile_pos"][1] * int(Map.config["Tilemap"]["tile_height"]))),
+                        {"init_pos": (dynamic[i]["init_pos"][0] * int(Map.config["Tilemap"]["tile_width"]),
+                                      dynamic[i]["init_pos"][1] * int(Map.config["Tilemap"]["tile_height"])),
+                         "key_positions": [(j[0] * int(Map.config["Tilemap"]["tile_width"]),
+                                            j[1] * int(Map.config["Tilemap"]["tile_height"])) for j in dynamic[i]["key_positions"]],
                          "movement_type": dynamic[i]["movement_type"],
                          "color": dynamic[i]["color"],
                          "speed": dynamic[i]["speed"]})

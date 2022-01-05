@@ -17,7 +17,7 @@ while True:
     cur_map_surface = cur_map.generateSurface()
     plr.add(Player(cur_map.spawn_tile.center if plr.sprite is None or plr.sprite.next_level else plr.sprite.respawn_pos))
     coins = pygame.sprite.Group([Coin(i) for i in cur_map.coins_coords])
-    enemies = pygame.sprite.Group([Enemy(i["coords"], i["movement_type"], i["color"], i["speed"]) for i in cur_map.enemies_data])
+    enemies = pygame.sprite.Group([Enemy(i["init_pos"], i["key_positions"], i["movement_type"], i["color"], i["speed"]) for i in cur_map.enemies_data])
     while True:
         mainsurf.fill(list(map(int, config["Colors"]["background"].split(", "))))
         mainsurf.blit(cur_map_surface, (0, 0))

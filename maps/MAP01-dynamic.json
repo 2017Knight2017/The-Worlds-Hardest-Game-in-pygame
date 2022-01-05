@@ -6,8 +6,8 @@
   "0002": {
     "type": "enemy",
     "movement_type": "from_to",
-    "start_tile_pos": [9, 3],
-    "finish_tile_pos": [13, 3],
+    "key_positions": [[9, 3], [13, 3], [13, 6], [9, 6]],
+    "init_pos": [11, 3],
     "speed": 1.0,
     "color": 1
   }

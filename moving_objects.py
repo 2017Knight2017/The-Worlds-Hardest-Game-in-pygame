@@ -53,39 +53,32 @@ class Enemy(Gameobject):
     config = ConfigParser()
     config.read("options.ini")
 
-    def __init__(self, start_finish: tuple[tuple[int, int], tuple[int, int]], movement_type: str, color: int, speed: float):
-        super().__init__(start_finish[0],
+    def __init__(self, init_pos: tuple, key_positions: list[tuple[int, int]], movement_type: str, color: int, speed: float):
+        super().__init__(init_pos,
                          image=pygame.image.load(Player.config["Tilemap"]["tilemap_path"]).convert_alpha().subsurface(
                              int(Player.config["Tilemap"]["sprite_width"]) * color,
                              int(Player.config["Tilemap"]["tile_height"]),
                              int(Player.config["Tilemap"]["sprite_width"]),
                              int(Player.config["Tilemap"]["sprite_height"])))
-        self.start, self.finish = start_finish
         self.speed = speed
+        self.key_positions = key_positions
         self.state = 0
         self.movement_type = movement_type
 
     def fromTo(self):
-        if self.start[0] == self.finish[0]:
-            if self.start[1] < self.finish[1]:
-                match self.state:
-                    case 0: self.rect.y += self.speed
-                    case 1: self.rect.y -= self.speed
-            elif self.start[1] > self.finish[1]:
-                match self.state:
-                    case 0: self.rect.y -= self.speed
-                    case 1: self.rect.y += self.speed
-        elif self.start[1] == self.finish[1]:
-            if self.start[0] < self.finish[0]:
-                match self.state:
-                    case 0: self.rect.x += self.speed
-                    case 1: self.rect.x -= self.speed
-            elif self.start[0] > self.finish[0]:
-                match self.state:
-                    case 0: self.rect.x -= self.speed
-                    case 1: self.rect.x += self.speed
-        if self.rect.center == self.finish or self.rect.center == self.start:
-            self.state = (self.state + 1) % 2
+        next_state = (self.state + 1) % len(self.key_positions)
+        if self.key_positions[self.state][0] == self.key_positions[next_state][0]:
+            if self.key_positions[self.state][1] < self.key_positions[next_state][1]:
+                self.rect.y += self.speed
+            elif self.key_positions[self.state][1] > self.key_positions[next_state][1]:
+                self.rect.y -= self.speed
+        elif self.key_positions[self.state][1] == self.key_positions[next_state][1]:
+            if self.key_positions[self.state][0] < self.key_positions[next_state][0]:
+                self.rect.x += self.speed
+            elif self.key_positions[self.state][0] > self.key_positions[next_state][0]:
+                self.rect.x -= self.speed
+        if self.rect.center == self.key_positions[next_state]:
+            self.state = next_state
 
     def update(self):
         if self.movement_type == "from_to":
