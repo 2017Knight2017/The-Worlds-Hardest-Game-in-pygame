@@ -46,6 +46,7 @@ class Map:
                                      dynamic[i]["start_tile_pos"][1] * int(Map.config["Tilemap"]["tile_height"])),
                                     (dynamic[i]["finish_tile_pos"][0] * int(Map.config["Tilemap"]["tile_width"]),
                                      dynamic[i]["finish_tile_pos"][1] * int(Map.config["Tilemap"]["tile_height"]))),
+                         "movement_type": dynamic[i]["movement_type"],
                          "color": dynamic[i]["color"],
                          "speed": dynamic[i]["speed"]})
 
