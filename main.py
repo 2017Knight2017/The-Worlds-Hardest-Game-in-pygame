@@ -10,59 +10,60 @@ mainsurf = pygame.display.set_mode((640, 480))
 pygame.display.set_caption("ddddd")
 clock = pygame.time.Clock()
 map_number = 0
+plr = pygame.sprite.GroupSingle()
 
 while True:
     cur_map = Map(map_number)
     cur_map_surface = cur_map.generateSurface()
-    plr = Player(cur_map.spawn_tile.center)
+    plr.add(Player(cur_map.spawn_tile.center))
     coins = pygame.sprite.Group([Coin(i) for i in cur_map.coins_coords])
     enemies = pygame.sprite.Group([Enemy(i["coords"][0], i["color"], i["speed"]) for i in cur_map.enemies_data])
     while True:
         mainsurf.fill(list(map(int, config["Colors"]["background"].split(", "))))
         mainsurf.blit(cur_map_surface, (0, 0))
-        mainsurf.blit(plr.image, plr.rect)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit()
 
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT] and plr.rect.x > 0:
+        if keys[pygame.K_LEFT] and plr.sprite.rect.x > 0:
             g = True
             for i in cur_map.walls_tiles:
-                if i.collidepoint(plr.rect.left - float(Player.config["Player"]["speed"]), plr.rect.centery):
+                if i.collidepoint(plr.sprite.rect.left - float(Player.config["Player"]["speed"]), plr.sprite.rect.centery):
                     g = False
                     break
-            if g: plr.moveLeft()
-        if keys[pygame.K_RIGHT] and plr.rect.x < (640 - plr.rect.width):
+            if g: plr.sprite.moveLeft()
+        if keys[pygame.K_RIGHT] and plr.sprite.rect.x < (640 - plr.sprite.rect.width):
             g = True
             for i in cur_map.walls_tiles:
-                if i.collidepoint(plr.rect.right + float(Player.config["Player"]["speed"]), plr.rect.centery):
+                if i.collidepoint(plr.sprite.rect.right + float(Player.config["Player"]["speed"]), plr.sprite.rect.centery):
                     g = False
                     break
-            if g: plr.moveRight()
-        if keys[pygame.K_UP] and plr.rect.y > 0:
+            if g: plr.sprite.moveRight()
+        if keys[pygame.K_UP] and plr.sprite.rect.y > 0:
             g = True
             for i in cur_map.walls_tiles:
-                if i.collidepoint(plr.rect.centerx, plr.rect.top - float(Player.config["Player"]["speed"])):
+                if i.collidepoint(plr.sprite.rect.centerx, plr.sprite.rect.top - float(Player.config["Player"]["speed"])):
                     g = False
                     break
-            if g: plr.moveUp()
-        if keys[pygame.K_DOWN] and plr.rect.y < (480 - plr.rect.height):
+            if g: plr.sprite.moveUp()
+        if keys[pygame.K_DOWN] and plr.sprite.rect.y < (480 - plr.sprite.rect.height):
             g = True
             for i in cur_map.walls_tiles:
-                if i.collidepoint(plr.rect.centerx, plr.rect.bottom + float(Player.config["Player"]["speed"])):
+                if i.collidepoint(plr.sprite.rect.centerx, plr.sprite.rect.bottom + float(Player.config["Player"]["speed"])):
                     g = False
                     break
-            if g: plr.moveDown()
+            if g: plr.sprite.moveDown()
 
-        pygame.sprite.spritecollide(plr, coins, True)
+        pygame.sprite.spritecollide(plr.sprite, coins, True)
 
-        if plr.next_level:
+        if plr.sprite.next_level:
             map_number += 1
             break
 
         enemies.draw(mainsurf)
         coins.draw(mainsurf)
-        plr.update(cur_map.checkpoint_tiles, cur_map.finish_tiles, coins)
+        plr.update(cur_map.checkpoint_tiles, cur_map.finish_tiles, coins, enemies)
+        plr.draw(mainsurf)
         clock.tick(int(config["General"]["fps"]))
         pygame.display.update()

@@ -38,9 +38,10 @@ class Player(Gameobject):
     def moveRight(self):
         self.rect.x += int(Player.config["Player"]["speed"])
 
-    def update(self, checkpoints: list[pygame.Rect], finish_tiles: list[pygame.Rect], coins: pygame.sprite.Group):
+    def update(self, checkpoints: list[pygame.Rect], finish_tiles: list[pygame.Rect], coins: pygame.sprite.Group, enemies: pygame.sprite.Group):
         for i in checkpoints:
             if i.colliderect(self): self.respawn_pos = i.center
+
         self.next_level = not self.rect.collidelist(finish_tiles) and not coins.sprites()
 
 
