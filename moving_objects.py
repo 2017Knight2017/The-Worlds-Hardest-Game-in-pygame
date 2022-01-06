@@ -19,10 +19,10 @@ class Player(Gameobject):
     def __init__(self, spawn_tile_xy: tuple[int, int]):
         super().__init__(spawn_tile_xy,
                          image=pygame.image.load(Player.config["Tilemap"]["tilemap_path"]).convert_alpha().subsurface(
-                             int(Player.config["Tilemap"]["sprite_width"]) * 0,
+                             int(Player.config["Tilemap"]["tile_width"]) * 0,
                              int(Player.config["Tilemap"]["tile_height"]),
-                             int(Player.config["Tilemap"]["sprite_width"]),
-                             int(Player.config["Tilemap"]["sprite_height"])))
+                             int(Player.config["Tilemap"]["player_width"]),
+                             int(Player.config["Tilemap"]["player_height"])))
         self.respawn_pos = None
         self.next_level = False
         self.true_coords = list(self.rect.topleft)
@@ -51,9 +51,9 @@ class Player(Gameobject):
 
 class Enemy(Gameobject):
     """
-    color=1 → blue enemy
-    color=2 → pink enemy
-    color=3 → red enemy
+    color=0 → blue enemy
+    color=1 → pink enemy
+    color=2 → red enemy
     """
     config = ConfigParser()
     config.read("options.ini")
@@ -61,10 +61,10 @@ class Enemy(Gameobject):
     def __init__(self, init_pos: tuple, key_positions: list[tuple[int, int]], movement_type: str, color: int, speed: float):
         super().__init__(init_pos,
                          image=pygame.image.load(Player.config["Tilemap"]["tilemap_path"]).convert_alpha().subsurface(
-                             int(Player.config["Tilemap"]["sprite_width"]) * color,
+                             int(Player.config["Tilemap"]["player_width"]) + int(Player.config["Tilemap"]["coin_and_enemy_width"]) * color,
                              int(Player.config["Tilemap"]["tile_height"]),
-                             int(Player.config["Tilemap"]["sprite_width"]),
-                             int(Player.config["Tilemap"]["sprite_height"])))
+                             int(Player.config["Tilemap"]["coin_and_enemy_width"]),
+                             int(Player.config["Tilemap"]["coin_and_enemy_height"])))
         self.speed = speed
         self.key_positions = key_positions
         self.state = 0
@@ -106,7 +106,7 @@ class Coin(Gameobject):
     def __init__(self, xy: tuple[int, int]):
         super().__init__(xy,
                          image=pygame.image.load(Player.config["Tilemap"]["tilemap_path"]).convert_alpha().subsurface(
-                             int(Player.config["Tilemap"]["sprite_width"]) * 4,
+                             int(Player.config["Tilemap"]["player_width"]) + int(Player.config["Tilemap"]["coin_and_enemy_width"]) * 3,
                              int(Player.config["Tilemap"]["tile_height"]),
-                             int(Player.config["Tilemap"]["sprite_width"]),
-                             int(Player.config["Tilemap"]["sprite_height"])))
+                             int(Player.config["Tilemap"]["coin_and_enemy_width"]),
+                             int(Player.config["Tilemap"]["coin_and_enemy_height"])))

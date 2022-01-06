@@ -5,7 +5,7 @@
     "key_positions": [[5.5, 2.5], [14.5, 2.5]],
     "init_pos": [5.5, 2.5],
     "speed": 2.0,
-    "color": 1
+    "color": 0
   },
   "0002": {
     "type": "enemy",
@@ -13,7 +13,7 @@
     "key_positions": [[14.5, 3.5], [5.5, 3.5]],
     "init_pos": [14.5, 3.5],
     "speed": 2.0,
-    "color": 1
+    "color": 0
   },
   "0003": {
     "type": "enemy",
@@ -21,7 +21,7 @@
     "key_positions": [[5.5, 4.5], [14.5, 4.5]],
     "init_pos": [5.5, 4.5],
     "speed": 2.0,
-    "color": 1
+    "color": 0
   },
   "0004": {
     "type": "enemy",
@@ -29,6 +29,6 @@
     "key_positions": [[14.5, 5.5], [5.5, 5.5]],
     "init_pos": [14.5, 5.5],
     "speed": 2.0,
-    "color": 1
+    "color": 0
   }
 }

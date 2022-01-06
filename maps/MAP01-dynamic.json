@@ -9,7 +9,7 @@
     "key_positions": [[4.5, 1.5], [4.5, 6.5]],
     "init_pos": [4.5, 1.5],
     "speed": 2.0,
-    "color": 1
+    "color": 0
   },
   "0003": {
     "type": "enemy",
@@ -17,7 +17,7 @@
     "key_positions": [[5.5, 6.5], [5.5, 1.5]],
     "init_pos": [5.5, 6.5],
     "speed": 2.0,
-    "color": 1
+    "color": 0
   },
   "0004": {
     "type": "enemy",
@@ -25,7 +25,7 @@
     "key_positions": [[6.5, 1.5], [6.5, 6.5]],
     "init_pos": [6.5, 1.5],
     "speed": 2.0,
-    "color": 1
+    "color": 0
   },
   "0005": {
     "type": "enemy",
@@ -33,7 +33,7 @@
     "key_positions": [[7.5, 6.5], [7.5, 1.5]],
     "init_pos": [7.5, 6.5],
     "speed": 2.0,
-    "color": 1
+    "color": 0
   },
   "0006": {
     "type": "enemy",
@@ -41,7 +41,7 @@
     "key_positions": [[8.5, 1.5], [8.5, 6.5]],
     "init_pos": [8.5, 1.5],
     "speed": 2.0,
-    "color": 1
+    "color": 0
   },
   "0007": {
     "type": "enemy",
@@ -49,7 +49,7 @@
     "key_positions": [[9.5, 6.5], [9.5, 1.5]],
     "init_pos": [9.5, 6.5],
     "speed": 2.0,
-    "color": 1
+    "color": 0
   },
   "0008": {
     "type": "enemy",
@@ -57,7 +57,7 @@
     "key_positions": [[10.5, 1.5], [10.5, 6.5]],
     "init_pos": [10.5, 1.5],
     "speed": 2.0,
-    "color": 1
+    "color": 0
   },
   "0009": {
     "type": "enemy",
@@ -65,7 +65,7 @@
     "key_positions": [[11.5, 6.5], [11.5, 1.5]],
     "init_pos": [11.5, 6.5],
     "speed": 2.0,
-    "color": 1
+    "color": 0
   },
   "0010": {
     "type": "enemy",
@@ -73,7 +73,7 @@
     "key_positions": [[12.5, 1.5], [12.5, 6.5]],
     "init_pos": [12.5, 1.5],
     "speed": 2.0,
-    "color": 1
+    "color": 0
   },
   "0011": {
     "type": "enemy",
@@ -81,6 +81,6 @@
     "key_positions": [[13.5, 6.5], [13.5, 1.5]],
     "init_pos": [13.5, 6.5],
     "speed": 2.0,
-    "color": 1
+    "color": 0
   }
 }

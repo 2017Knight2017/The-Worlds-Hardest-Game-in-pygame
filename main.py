@@ -9,7 +9,7 @@ config.read("options.ini")
 mainsurf = pygame.display.set_mode((640, 480))
 pygame.display.set_caption("ddddd")
 clock = pygame.time.Clock()
-map_number = 6
+map_number = 0
 plr = pygame.sprite.GroupSingle()
 
 while True:
