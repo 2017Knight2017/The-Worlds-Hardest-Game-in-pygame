@@ -1,4 +1,5 @@
 import pygame
+import math
 from configparser import ConfigParser
 
 
@@ -58,7 +59,7 @@ class Enemy(Gameobject):
     config = ConfigParser()
     config.read("options.ini")
 
-    def __init__(self, init_pos: tuple, key_positions: list[tuple[int, int]], movement_type: str, color: int, speed: float):
+    def __init__(self, init_pos: tuple, movement_type: str, color: int, speed: float, key_positions: list[tuple[int, int]] = None):
         super().__init__(init_pos,
                          image=pygame.image.load(Player.config["Tilemap"]["tilemap_path"]).convert_alpha().subsurface(
                              int(Player.config["Tilemap"]["player_width"]) + int(Player.config["Tilemap"]["coin_and_enemy_width"]) * color,
@@ -66,7 +67,7 @@ class Enemy(Gameobject):
                              int(Player.config["Tilemap"]["coin_and_enemy_width"]),
                              int(Player.config["Tilemap"]["coin_and_enemy_height"])))
         self.speed = speed
-        self.key_positions = key_positions
+        if key_positions is not None: self.key_positions = key_positions
         self.state = 0
         self.movement_type = movement_type
         self.true_coords = list(self.rect.topleft)
@@ -76,17 +77,15 @@ class Enemy(Gameobject):
         if self.key_positions[self.state][0] == self.key_positions[next_state][0]:
             if self.key_positions[self.state][1] < self.key_positions[next_state][1]:
                 self.true_coords[1] += self.speed
-                self.rect.y = self.true_coords[1]
             elif self.key_positions[self.state][1] > self.key_positions[next_state][1]:
                 self.true_coords[1] -= self.speed
-                self.rect.y = self.true_coords[1]
+            self.rect.y = self.true_coords[1]
         elif self.key_positions[self.state][1] == self.key_positions[next_state][1]:
             if self.key_positions[self.state][0] < self.key_positions[next_state][0]:
                 self.true_coords[0] += self.speed
-                self.rect.x = self.true_coords[0]
             elif self.key_positions[self.state][0] > self.key_positions[next_state][0]:
                 self.true_coords[0] -= self.speed
-                self.rect.x = self.true_coords[0]
+            self.rect.x = self.true_coords[0]
         if self.rect.center == self.key_positions[next_state]:
             self.state = next_state
 

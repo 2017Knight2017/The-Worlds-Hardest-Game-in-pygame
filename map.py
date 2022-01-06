@@ -38,68 +38,60 @@ class Map:
             dynamic = load(raw_dynamic)
             for i in dynamic.keys():
                 if dynamic[i]["type"] == "coin":
-                    self.coins_coords.append((dynamic[i]["tile_pos"][0] * int(Map.config["Tilemap"]["tile_width"]),
-                                              dynamic[i]["tile_pos"][1] * int(Map.config["Tilemap"]["tile_height"])))
+                    self.coins_coords.append(Map.normalizeCoords(*dynamic[i]["tile_pos"]))
                 elif dynamic[i]["type"] == "enemy":
-                    self.enemies_data.append(
-                        {"init_pos": (dynamic[i]["init_pos"][0] * int(Map.config["Tilemap"]["tile_width"]),
-                                      dynamic[i]["init_pos"][1] * int(Map.config["Tilemap"]["tile_height"])),
-                         "key_positions": [(j[0] * int(Map.config["Tilemap"]["tile_width"]),
-                                            j[1] * int(Map.config["Tilemap"]["tile_height"])) for j in dynamic[i]["key_positions"]],
-                         "movement_type": dynamic[i]["movement_type"],
-                         "color": dynamic[i]["color"],
-                         "speed": dynamic[i]["speed"]})
+                    dic = {"init_pos": Map.normalizeCoords(*dynamic[i]["init_pos"]),
+                           "movement_type": dynamic[i]["movement_type"],
+                           "color": dynamic[i]["color"],
+                           "speed": dynamic[i]["speed"]}
+                    match dynamic[i]["movement_type"]:
+                        case "from_to":
+                            dic["key_positions"] = [Map.normalizeCoords(*j) for j in dynamic[i]["key_positions"]]
+                        case "around":
+                            pass
+                    self.enemies_data.append(dic)
 
     def generateSurface(self) -> pygame.Surface:
-        res = pygame.Surface((int(Map.config["Tilemap"]["tile_width"]) * self.map_width, int(Map.config["Tilemap"]["tile_height"]) * self.map_height))
-        res.fill(list(map(int, Map.config["Colors"]["background"].split(", "))))
         tile_height, tile_width = int(Map.config["Tilemap"]["tile_height"]), int(Map.config["Tilemap"]["tile_width"])
+        res = pygame.Surface((tile_width * self.map_width, tile_height * self.map_height))
+        res.fill(list(map(int, Map.config["Colors"]["background"].split(", "))))
         for row_index in range(self.map_height):
             for column_index in range(self.map_width):
                 match int(self.static_map[row_index][column_index]):
                     case 0:
-                        self.walls_tiles.append(pygame.Rect(tile_width * column_index, tile_height * row_index,
-                                                            tile_width, tile_height))
+                        self.walls_tiles.append(pygame.Rect(*Map.normalizeCoords(column_index, row_index), tile_width, tile_height))
                     case 1:
                         if row_index % 2 == column_index % 2:
-                            res.blit(self.tileset.subsurface(tile_width, 0, tile_width, tile_height),
-                                     (tile_width * column_index, tile_height * row_index))
+                            res.blit(self.tileset.subsurface(tile_width, 0, tile_width, tile_height), Map.normalizeCoords(column_index, row_index))
                         else:
-                            res.blit(self.tileset.subsurface(tile_width * 2, 0, tile_width, tile_height),
-                                     (tile_width * column_index, tile_height * row_index))
+                            res.blit(self.tileset.subsurface(tile_width * 2, 0, tile_width, tile_height), Map.normalizeCoords(column_index, row_index))
                         self.drawLineIfThereIsWall(res, self.static_map, row_index, column_index)
                     case 2:
-                        res.blit(self.tileset.subsurface(tile_width * 0, 0, tile_width, tile_height),
-                                 (tile_width * column_index, tile_height * row_index))
+                        res.blit(self.tileset.subsurface(tile_width * 0, 0, tile_width, tile_height), Map.normalizeCoords(column_index, row_index))
                         self.drawLineIfThereIsWall(res, self.static_map, row_index, column_index)
-                        self.checkpoint_tiles.append(pygame.Rect(tile_width * column_index, tile_height * row_index,
-                                                                 tile_width, tile_height))
+                        self.checkpoint_tiles.append(pygame.Rect(*Map.normalizeCoords(column_index, row_index), tile_width, tile_height))
                     case 3:
-                        res.blit(self.tileset.subsurface(tile_width * 0, 0, tile_width, tile_height),
-                                 (tile_width * column_index, tile_height * row_index))
+                        res.blit(self.tileset.subsurface(tile_width * 0, 0, tile_width, tile_height), Map.normalizeCoords(column_index, row_index))
                         self.drawLineIfThereIsWall(res, self.static_map, row_index, column_index)
-                        self.spawn_tile = pygame.Rect(tile_width * column_index, tile_height * row_index, tile_width,
-                                                      tile_height)
+                        self.spawn_tile = pygame.Rect(*Map.normalizeCoords(column_index, row_index), tile_width, tile_height)
                     case 4:
-                        res.blit(self.tileset.subsurface(tile_width * 0, 0, tile_width, tile_height),
-                                 (tile_width * column_index, tile_height * row_index))
+                        res.blit(self.tileset.subsurface(tile_width * 0, 0, tile_width, tile_height), Map.normalizeCoords(column_index, row_index))
                         self.drawLineIfThereIsWall(res, self.static_map, row_index, column_index)
-                        self.finish_tiles.append(pygame.Rect(tile_width * column_index, tile_height * row_index,
-                                                             tile_width, tile_height))
+                        self.finish_tiles.append(pygame.Rect(*Map.normalizeCoords(column_index, row_index), tile_width, tile_height))
         return res
 
-    def drawLineIfThereIsWall(self, res: pygame.Surface, static_map: list, row_index: int, column_index: int):
-        tile_width, tile_height = int(Map.config["Tilemap"]["tile_width"]), int(Map.config["Tilemap"]["tile_height"])
+    @staticmethod
+    def normalizeCoords(x: int | float, y: int | float) -> tuple[float, float] | tuple[int, int]:
+        return x * int(Map.config["Tilemap"]["tile_width"]), y * int(Map.config["Tilemap"]["tile_height"])
+
+    @staticmethod
+    def drawLineIfThereIsWall(res: pygame.Surface, static_map: list, row_index: int, column_index: int):
         BLACK = list(map(int, Map.config["Colors"]["black"].split(", ")))
         if static_map[row_index - 1][column_index] == "0":  # Top
-            pygame.draw.line(res, BLACK, (tile_width * column_index, tile_height * row_index),
-                             (tile_width * (column_index + 1), tile_height * row_index), 3)
+            pygame.draw.line(res, BLACK, Map.normalizeCoords(column_index, row_index), Map.normalizeCoords(column_index + 1, row_index), 3)
         if static_map[row_index][column_index - 1] == "0":  # Left
-            pygame.draw.line(res, BLACK, (tile_width * column_index, tile_height * row_index),
-                             (tile_width * column_index, tile_height * (row_index + 1)), 3)
+            pygame.draw.line(res, BLACK, Map.normalizeCoords(column_index, row_index), Map.normalizeCoords(column_index, row_index + 1), 3)
         if static_map[row_index + 1][column_index] == "0":  # Bottom
-            pygame.draw.line(res, BLACK, (tile_width * column_index, tile_height * (row_index + 1)),
-                             (tile_width * (column_index + 1), tile_height * (row_index + 1)), 3)
+            pygame.draw.line(res, BLACK, Map.normalizeCoords(column_index, row_index + 1), Map.normalizeCoords(column_index + 1, row_index + 1), 3)
         if static_map[row_index][column_index + 1] == "0":  # Right
-            pygame.draw.line(res, BLACK, (tile_width * (column_index + 1), tile_height * row_index),
-                             (tile_width * (column_index + 1), tile_height * (row_index + 1)), 3)
+            pygame.draw.line(res, BLACK, Map.normalizeCoords(column_index + 1, row_index), Map.normalizeCoords(column_index + 1, row_index + 1), 3)
