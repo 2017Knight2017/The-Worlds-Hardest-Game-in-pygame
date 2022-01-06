@@ -25,18 +25,23 @@ class Player(Gameobject):
                              int(Player.config["Tilemap"]["sprite_height"])))
         self.respawn_pos = None
         self.next_level = False
+        self.true_coords = list(self.rect.topleft)
 
     def moveUp(self):
-        self.rect.y -= float(Player.config["Player"]["speed"])
+        self.true_coords[1] -= float(Player.config["Player"]["speed"])
+        self.rect.y = self.true_coords[1]
 
     def moveDown(self):
-        self.rect.y += float(Player.config["Player"]["speed"])
+        self.true_coords[1] += float(Player.config["Player"]["speed"])
+        self.rect.y = self.true_coords[1]
 
     def moveLeft(self):
-        self.rect.x -= float(Player.config["Player"]["speed"])
+        self.true_coords[0] -= float(Player.config["Player"]["speed"])
+        self.rect.x = self.true_coords[0]
 
     def moveRight(self):
-        self.rect.x += float(Player.config["Player"]["speed"])
+        self.true_coords[0] += float(Player.config["Player"]["speed"])
+        self.rect.x = self.true_coords[0]
 
     def update(self, checkpoints: list[pygame.Rect], finish_tiles: list[pygame.Rect], coins: pygame.sprite.Group):
         for i in checkpoints:
@@ -64,25 +69,34 @@ class Enemy(Gameobject):
         self.key_positions = key_positions
         self.state = 0
         self.movement_type = movement_type
+        self.true_coords = list(self.rect.topleft)
 
     def fromTo(self):
         next_state = (self.state + 1) % len(self.key_positions)
         if self.key_positions[self.state][0] == self.key_positions[next_state][0]:
             if self.key_positions[self.state][1] < self.key_positions[next_state][1]:
-                self.rect.y += self.speed
+                self.true_coords[1] += self.speed
+                self.rect.y = self.true_coords[1]
             elif self.key_positions[self.state][1] > self.key_positions[next_state][1]:
-                self.rect.y -= self.speed
+                self.true_coords[1] -= self.speed
+                self.rect.y = self.true_coords[1]
         elif self.key_positions[self.state][1] == self.key_positions[next_state][1]:
             if self.key_positions[self.state][0] < self.key_positions[next_state][0]:
-                self.rect.x += self.speed
+                self.true_coords[0] += self.speed
+                self.rect.x = self.true_coords[0]
             elif self.key_positions[self.state][0] > self.key_positions[next_state][0]:
-                self.rect.x -= self.speed
+                self.true_coords[0] -= self.speed
+                self.rect.x = self.true_coords[0]
         if self.rect.center == self.key_positions[next_state]:
             self.state = next_state
 
+    def around(self):
+        pass
+
     def update(self):
-        if self.movement_type == "from_to":
-            self.fromTo()
+        match self.movement_type:
+            case "from_to": self.fromTo()
+            case "around": self.around()
 
 
 class Coin(Gameobject):

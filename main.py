@@ -9,13 +9,13 @@ config.read("options.ini")
 mainsurf = pygame.display.set_mode((640, 480))
 pygame.display.set_caption("ddddd")
 clock = pygame.time.Clock()
-map_number = 0
+map_number = 6
 plr = pygame.sprite.GroupSingle()
 
 while True:
     cur_map = Map(map_number)
     cur_map_surface = cur_map.generateSurface()
-    plr.add(Player(cur_map.spawn_tile.center if plr.sprite is None or plr.sprite.next_level else plr.sprite.respawn_pos))
+    plr.add(Player(cur_map.spawn_tile.center if plr.sprite is None or plr.sprite.respawn_pos is None or plr.sprite.next_level else plr.sprite.respawn_pos))
     coins = pygame.sprite.Group([Coin(i) for i in cur_map.coins_coords])
     enemies = pygame.sprite.Group([Enemy(i["init_pos"], i["key_positions"], i["movement_type"], i["color"], i["speed"]) for i in cur_map.enemies_data])
     while True:
@@ -26,28 +26,28 @@ while True:
                 exit()
 
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT] and plr.sprite.rect.x > 0:
+        if keys[pygame.K_LEFT]:
             g = True
             for i in cur_map.walls_tiles:
                 if i.collidepoint(plr.sprite.rect.left - float(Player.config["Player"]["speed"]), plr.sprite.rect.centery):
                     g = False
                     break
             if g: plr.sprite.moveLeft()
-        if keys[pygame.K_RIGHT] and plr.sprite.rect.x < (640 - plr.sprite.rect.width):
+        if keys[pygame.K_RIGHT]:
             g = True
             for i in cur_map.walls_tiles:
                 if i.collidepoint(plr.sprite.rect.right + float(Player.config["Player"]["speed"]), plr.sprite.rect.centery):
                     g = False
                     break
             if g: plr.sprite.moveRight()
-        if keys[pygame.K_UP] and plr.sprite.rect.y > 0:
+        if keys[pygame.K_UP]:
             g = True
             for i in cur_map.walls_tiles:
                 if i.collidepoint(plr.sprite.rect.centerx, plr.sprite.rect.top - float(Player.config["Player"]["speed"])):
                     g = False
                     break
             if g: plr.sprite.moveUp()
-        if keys[pygame.K_DOWN] and plr.sprite.rect.y < (480 - plr.sprite.rect.height):
+        if keys[pygame.K_DOWN]:
             g = True
             for i in cur_map.walls_tiles:
                 if i.collidepoint(plr.sprite.rect.centerx, plr.sprite.rect.bottom + float(Player.config["Player"]["speed"])):

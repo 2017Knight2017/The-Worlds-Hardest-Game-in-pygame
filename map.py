@@ -67,31 +67,30 @@ class Map:
                         else:
                             res.blit(self.tileset.subsurface(tile_width * 2, 0, tile_width, tile_height),
                                      (tile_width * column_index, tile_height * row_index))
-                        Map.drawLineIfThereIsWall(res, self.static_map, row_index, column_index)
+                        self.drawLineIfThereIsWall(res, self.static_map, row_index, column_index)
                     case 2:
                         res.blit(self.tileset.subsurface(tile_width * 0, 0, tile_width, tile_height),
                                  (tile_width * column_index, tile_height * row_index))
-                        Map.drawLineIfThereIsWall(res, self.static_map, row_index, column_index)
+                        self.drawLineIfThereIsWall(res, self.static_map, row_index, column_index)
                         self.checkpoint_tiles.append(pygame.Rect(tile_width * column_index, tile_height * row_index,
                                                                  tile_width, tile_height))
                     case 3:
                         res.blit(self.tileset.subsurface(tile_width * 0, 0, tile_width, tile_height),
                                  (tile_width * column_index, tile_height * row_index))
-                        Map.drawLineIfThereIsWall(res, self.static_map, row_index, column_index)
+                        self.drawLineIfThereIsWall(res, self.static_map, row_index, column_index)
                         self.spawn_tile = pygame.Rect(tile_width * column_index, tile_height * row_index, tile_width,
                                                       tile_height)
                     case 4:
                         res.blit(self.tileset.subsurface(tile_width * 0, 0, tile_width, tile_height),
                                  (tile_width * column_index, tile_height * row_index))
-                        Map.drawLineIfThereIsWall(res, self.static_map, row_index, column_index)
+                        self.drawLineIfThereIsWall(res, self.static_map, row_index, column_index)
                         self.finish_tiles.append(pygame.Rect(tile_width * column_index, tile_height * row_index,
                                                              tile_width, tile_height))
         return res
 
-    @classmethod
-    def drawLineIfThereIsWall(cls, res: pygame.Surface, static_map: list, row_index: int, column_index: int):
-        tile_width, tile_height = int(cls.config["Tilemap"]["tile_width"]), int(cls.config["Tilemap"]["tile_height"])
-        BLACK = list(map(int, cls.config["Colors"]["black"].split(", ")))
+    def drawLineIfThereIsWall(self, res: pygame.Surface, static_map: list, row_index: int, column_index: int):
+        tile_width, tile_height = int(Map.config["Tilemap"]["tile_width"]), int(Map.config["Tilemap"]["tile_height"])
+        BLACK = list(map(int, Map.config["Colors"]["black"].split(", ")))
         if static_map[row_index - 1][column_index] == "0":  # Top
             pygame.draw.line(res, BLACK, (tile_width * column_index, tile_height * row_index),
                              (tile_width * (column_index + 1), tile_height * row_index), 3)

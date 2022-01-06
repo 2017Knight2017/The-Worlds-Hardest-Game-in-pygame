@@ -2,5 +2,205 @@
   "0001": {
         "type": "coin",
         "tile_pos": [18, 10]
-    }
+    },
+  "0002": {
+    "type": "enemy",
+    "movement_type": "from_to",
+    "key_positions": [[1.5, 3.5], [2.5, 3.5], [2.5, 4.5], [1.5, 4.5]],
+    "init_pos": [1.5, 3.5],
+    "speed": 1.5,
+    "color": 1
+  },
+  "0003": {
+    "type": "enemy",
+    "movement_type": "from_to",
+    "key_positions": [[4, 3.5]],
+    "init_pos": [4, 3.5],
+    "speed": 1.5,
+    "color": 1
+  },
+  "0004": {
+    "type": "enemy",
+    "movement_type": "from_to",
+    "key_positions": [[2.5, 6]],
+    "init_pos": [2.5, 6],
+    "speed": 1.5,
+    "color": 1
+  },
+  "0005": {
+    "type": "enemy",
+    "movement_type": "from_to",
+    "key_positions": [[1.5, 8]],
+    "init_pos": [1.5, 8],
+    "speed": 1.5,
+    "color": 1
+  },
+  "0006": {
+    "type": "enemy",
+    "movement_type": "from_to",
+    "key_positions": [[2.5, 10.5], [1.5, 10.5], [1.5, 9.5], [2.5, 9.5]],
+    "init_pos": [2.5, 10.5],
+    "speed": 1.5,
+    "color": 1
+  },
+  "0007": {
+    "type": "enemy",
+    "movement_type": "from_to",
+    "key_positions": [[4, 9.5]],
+    "init_pos": [4, 9.5],
+    "speed": 1.5,
+    "color": 1
+  },
+  "0008": {
+    "type": "enemy",
+    "movement_type": "from_to",
+    "key_positions": [[6.5, 10.5], [5.5, 10.5], [5.5, 9.5], [6.5, 9.5]],
+    "init_pos": [6.5, 10.5],
+    "speed": 1.5,
+    "color": 1
+  },
+  "0009": {
+    "type": "enemy",
+    "movement_type": "from_to",
+    "key_positions": [[5.5, 8]],
+    "init_pos": [5.5, 8],
+    "speed": 1.5,
+    "color": 1
+  },
+  "0010": {
+    "type": "enemy",
+    "movement_type": "from_to",
+    "key_positions": [[7, 7.5]],
+    "init_pos": [7, 7.5],
+    "speed": 1.5,
+    "color": 1
+  },
+  "0011": {
+    "type": "enemy",
+    "movement_type": "from_to",
+    "key_positions": [[8.5, 8.5]],
+    "init_pos": [8.5, 8.5],
+    "speed": 1.5,
+    "color": 1
+  },
+  "0012": {
+    "type": "enemy",
+    "movement_type": "from_to",
+    "key_positions": [[14.5, 8.5], [13.5, 8.5], [13.5, 7.5], [14.5, 7.5]],
+    "init_pos": [14.5, 8.5],
+    "speed": 1.5,
+    "color": 1
+  },
+  "0013": {
+    "type": "enemy",
+    "movement_type": "from_to",
+    "key_positions": [[13.5, 1.5], [14.5, 1.5], [14.5, 2.5], [13.5, 2.5]],
+    "init_pos": [13.5, 1.5],
+    "speed": 1.5,
+    "color": 1
+  },
+  "0014": {
+    "type": "enemy",
+    "movement_type": "from_to",
+    "key_positions": [[18.5, 2.5], [17.5, 2.5], [17.5, 1.5], [18.5, 1.5]],
+    "init_pos": [18.5, 2.5],
+    "speed": 1.5,
+    "color": 1
+  },
+  "0015": {
+    "type": "enemy",
+    "movement_type": "from_to",
+    "key_positions": [[5.5, 2]],
+    "init_pos": [5.5, 2],
+    "speed": 1.5,
+    "color": 1
+  },
+  "0016": {
+    "type": "enemy",
+    "movement_type": "from_to",
+    "key_positions": [[8, 2.5]],
+    "init_pos": [8, 2.5],
+    "speed": 1.5,
+    "color": 1
+  },
+  "0017": {
+    "type": "enemy",
+    "movement_type": "from_to",
+    "key_positions": [[10.5, 2.5], [9.5, 2.5], [9.5, 1.5], [10.5, 1.5]],
+    "init_pos": [10.5, 2.5],
+    "speed": 1.5,
+    "color": 1
+  },
+  "0018": {
+    "type": "enemy",
+    "movement_type": "from_to",
+    "key_positions": [[6.5, 4.5], [5.5, 4.5], [5.5, 3.5], [6.5, 3.5]],
+    "init_pos": [6.5, 4.5],
+    "speed": 1.5,
+    "color": 1
+  },
+  "0019": {
+    "type": "enemy",
+    "movement_type": "from_to",
+    "key_positions": [[9.5, 6.5], [10.5, 6.5], [10.5, 4.5], [10.5, 6.5]],
+    "init_pos": [9.5, 6.5],
+    "speed": 1.5,
+    "color": 1
+  },
+  "0020": {
+    "type": "enemy",
+    "movement_type": "from_to",
+    "key_positions": [[9.5, 4]],
+    "init_pos": [9.5, 4],
+    "speed": 1.5,
+    "color": 1
+  },
+  "0021": {
+    "type": "enemy",
+    "movement_type": "from_to",
+    "key_positions": [[17, 10.5], [17, 9.5], [14.5, 9.5], [17, 9.5]],
+    "init_pos": [17, 10.5],
+    "speed": 1.5,
+    "color": 1
+  },
+  "0022": {
+    "type": "enemy",
+    "movement_type": "from_to",
+    "key_positions": [[13.5, 10]],
+    "init_pos": [13.5, 10],
+    "speed": 1.5,
+    "color": 1
+  },
+  "0023": {
+    "type": "enemy",
+    "movement_type": "from_to",
+    "key_positions": [[14.5, 4]],
+    "init_pos": [14.5, 4],
+    "speed": 1.5,
+    "color": 1
+  },
+  "0024": {
+    "type": "enemy",
+    "movement_type": "from_to",
+    "key_positions": [[17.5, 4]],
+    "init_pos": [17.5, 4],
+    "speed": 1.5,
+    "color": 1
+  },
+  "0025": {
+    "type": "enemy",
+    "movement_type": "from_to",
+    "key_positions": [[16, 2.5]],
+    "init_pos": [16, 2.5],
+    "speed": 1.5,
+    "color": 1
+  },
+  "0026": {
+    "type": "enemy",
+    "movement_type": "from_to",
+    "key_positions": [[13.5, 6]],
+    "init_pos": [13.5, 6],
+    "speed": 1.5,
+    "color": 1
+  }
 }
