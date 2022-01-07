@@ -48,13 +48,13 @@ class Map:
                         case "from_to":
                             dic["key_positions"] = [Map.normalizeCoords(*j) for j in dynamic[i]["key_positions"]]
                         case "around":
-                            pass
+                            dic["circle_center"] = Map.normalizeCoords(*dynamic[i]["circle_center"])
                     self.enemies_data.append(dic)
 
     def generateSurface(self) -> pygame.Surface:
         tile_height, tile_width = int(Map.config["Tilemap"]["tile_height"]), int(Map.config["Tilemap"]["tile_width"])
         res = pygame.Surface((tile_width * self.map_width, tile_height * self.map_height))
-        res.fill(list(map(int, Map.config["Colors"]["background"].split(", "))))
+        res.fill([int(i) for i in Map.config["Colors"]["background"].split(", ")])
         for row_index in range(self.map_height):
             for column_index in range(self.map_width):
                 match int(self.static_map[row_index][column_index]):

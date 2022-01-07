@@ -1,18 +1,42 @@
 {
   "0001": {
-        "type": "coin",
-        "tile_pos": [3.5, 7.5]
-    },
+    "type": "coin",
+    "tile_pos": [3.5, 7.5]
+  },
   "0002": {
-        "type": "coin",
-        "tile_pos": [7.5, 7.5]
-    },
+    "type": "coin",
+    "tile_pos": [7.5, 7.5]
+  },
   "0003": {
-        "type": "coin",
-        "tile_pos": [11.5, 7.5]
-    },
+    "type": "coin",
+    "tile_pos": [11.5, 7.5]
+  },
   "0004": {
-        "type": "coin",
-        "tile_pos": [15.5, 7.5]
-    }
+    "type": "coin",
+    "tile_pos": [15.5, 7.5]
+  },
+  "0005": {
+    "type": "enemy",
+    "movement_type": "from_to",
+    "key_positions": [[5, 3]],
+    "init_pos": [5, 3],
+    "speed": 1,
+    "color": 0
+  },
+  "0006": {
+    "type": "enemy",
+    "movement_type": "around",
+    "circle_center": [5, 3],
+    "init_pos": [5, 5],
+    "speed": 0.2,
+    "color": 0
+  },
+  "0007": {
+    "type": "enemy",
+    "movement_type": "around",
+    "circle_center": [5, 3],
+    "init_pos": [6, 3],
+    "speed": 0.2,
+    "color": 0
+  }
 }

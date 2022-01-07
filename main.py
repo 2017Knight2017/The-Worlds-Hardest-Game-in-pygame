@@ -10,7 +10,7 @@ config.read("options.ini")
 mainsurf = pygame.display.set_mode((640, 480))
 pygame.display.set_caption("ddddd")
 clock = pygame.time.Clock()
-map_number = 9
+map_number = 0
 plr = pygame.sprite.GroupSingle()
 
 while True:
@@ -18,7 +18,13 @@ while True:
     cur_map_surface = cur_map.generateSurface()
     plr.add(Player(cur_map.spawn_tile.center if plr.sprite is None or plr.sprite.respawn_pos is None or plr.sprite.next_level else plr.sprite.respawn_pos))
     coins = pygame.sprite.Group([Coin(i) for i in cur_map.coins_coords])
-    enemies = pygame.sprite.Group([Enemy(i["init_pos"], i["movement_type"], i["color"], i["speed"],  i["key_positions"]) for i in cur_map.enemies_data])
+    enemies = pygame.sprite.Group()
+    for i in cur_map.enemies_data:
+        match i["movement_type"]:
+            case "from_to":
+                enemies.add([Enemy(i["init_pos"], i["movement_type"], i["color"], i["speed"], key_positions=i["key_positions"])])
+            case "around":
+                enemies.add([Enemy(i["init_pos"], i["movement_type"], i["color"], i["speed"], circle_center=i["circle_center"])])
     while True:
         mainsurf.fill(list(map(int, config["Colors"]["background"].split(", "))))
         mainsurf.blit(cur_map_surface, (0, 0))

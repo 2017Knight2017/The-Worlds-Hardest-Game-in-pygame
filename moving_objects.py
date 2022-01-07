@@ -47,7 +47,10 @@ class Player(Gameobject):
     def update(self, checkpoints: list[pygame.Rect], finish_tiles: list[pygame.Rect], coins: pygame.sprite.Group):
         for i in checkpoints:
             if i.colliderect(self): self.respawn_pos = i.center
-        self.next_level = not self.rect.collidelist(finish_tiles) and not coins.sprites()
+        self.next_level = False
+        for i in finish_tiles:
+            self.next_level = self.rect.colliderect(i) and not coins.sprites()
+            if self.next_level: break
 
 
 class Enemy(Gameobject):
@@ -59,15 +62,22 @@ class Enemy(Gameobject):
     config = ConfigParser()
     config.read("options.ini")
 
-    def __init__(self, init_pos: tuple, movement_type: str, color: int, speed: float, key_positions: list[tuple[int, int]] = None):
+    def __init__(self, init_pos: tuple, movement_type: str, color: int, speed: float,
+                 key_positions: list[tuple[int, int]] = None, circle_center: tuple[int, int] = None):
         super().__init__(init_pos,
                          image=pygame.image.load(Player.config["Tilemap"]["tilemap_path"]).convert_alpha().subsurface(
                              int(Player.config["Tilemap"]["player_width"]) + int(Player.config["Tilemap"]["coin_and_enemy_width"]) * color,
                              int(Player.config["Tilemap"]["tile_height"]),
                              int(Player.config["Tilemap"]["coin_and_enemy_width"]),
                              int(Player.config["Tilemap"]["coin_and_enemy_height"])))
+        self.init_pos = init_pos
         self.speed = speed
-        if key_positions is not None: self.key_positions = key_positions
+        self.circle_center = circle_center
+        self.radius = None
+        if self.circle_center is not None:
+            self.radius = math.sqrt((self.rect.centerx - self.circle_center[0]) ** 2 + (self.rect.centery - self.circle_center[1]) ** 2)
+        self.key_positions = key_positions
+        self.shift = 0
         self.state = 0
         self.movement_type = movement_type
         self.true_coords = list(self.rect.topleft)
@@ -90,7 +100,10 @@ class Enemy(Gameobject):
             self.state = next_state
 
     def around(self):
-        pass
+        self.true_coords = (self.radius * math.cos(self.shift) + self.circle_center[0],
+                            self.radius * math.sin(self.shift) + self.circle_center[1])
+        self.shift += self.speed
+        self.rect.center = self.true_coords
 
     def update(self):
         match self.movement_type:
