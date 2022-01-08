@@ -63,7 +63,8 @@ class Enemy(Gameobject):
     config.read("options.ini")
 
     def __init__(self, init_pos: tuple, movement_type: str, color: int, speed: float,
-                 key_positions: list[tuple[int, int]] = None, circle_center: tuple[int, int] = None):
+                 key_positions: list[tuple[int, int]] = None, circle_center: tuple[int, int] = None,
+                 clockwise: bool = None):
         super().__init__(init_pos,
                          image=pygame.image.load(Player.config["Tilemap"]["tilemap_path"]).convert_alpha().subsurface(
                              int(Player.config["Tilemap"]["player_width"]) + int(Player.config["Tilemap"]["coin_and_enemy_width"]) * color,
@@ -71,13 +72,20 @@ class Enemy(Gameobject):
                              int(Player.config["Tilemap"]["coin_and_enemy_width"]),
                              int(Player.config["Tilemap"]["coin_and_enemy_height"])))
         self.init_pos = init_pos
-        self.speed = speed
         self.circle_center = circle_center
-        self.radius = None
         if self.circle_center is not None:
+            self.clockwise = clockwise
             self.radius = math.sqrt((self.rect.centerx - self.circle_center[0]) ** 2 + (self.rect.centery - self.circle_center[1]) ** 2)
+            if self.init_pos[0] > self.circle_center[0]:
+                self.shift = math.pi
+            elif self.init_pos[0] < self.circle_center[0]:
+                self.shift = 0
+            elif self.init_pos[1] < self.circle_center[1]:
+                self.shift = math.pi / 2
+            elif self.init_pos[1] > self.circle_center[1]:
+                self.shift = 3*math.pi / 2
+        self.speed = speed
         self.key_positions = key_positions
-        self.shift = 0
         self.state = 0
         self.movement_type = movement_type
         self.true_coords = list(self.rect.topleft)
@@ -102,7 +110,8 @@ class Enemy(Gameobject):
     def around(self):
         self.true_coords = (self.radius * math.cos(self.shift) + self.circle_center[0],
                             self.radius * math.sin(self.shift) + self.circle_center[1])
-        self.shift += self.speed
+        if not self.clockwise: self.shift += self.speed / 10
+        else: self.shift -= self.speed / 10
         self.rect.center = self.true_coords
 
     def update(self):

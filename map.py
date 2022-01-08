@@ -49,6 +49,7 @@ class Map:
                             dic["key_positions"] = [Map.normalizeCoords(*j) for j in dynamic[i]["key_positions"]]
                         case "around":
                             dic["circle_center"] = Map.normalizeCoords(*dynamic[i]["circle_center"])
+                            dic["clockwise"] = dynamic[i]["clockwise"]
                     self.enemies_data.append(dic)
 
     def generateSurface(self) -> pygame.Surface:

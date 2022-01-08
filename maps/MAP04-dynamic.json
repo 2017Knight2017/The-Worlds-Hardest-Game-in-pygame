@@ -1,1 +1,146 @@
-{}
+{
+  "0001": {
+    "type": "enemy",
+    "movement_type": "around",
+    "clockwise": true,
+    "circle_center": [10, 6],
+    "init_pos": [8.5, 6],
+    "speed": 0.2,
+    "color": 0
+  },
+  "0002": {
+    "type": "enemy",
+    "movement_type": "around",
+    "clockwise": true,
+    "circle_center": [10, 6],
+    "init_pos": [6.5, 6],
+    "speed": 0.2,
+    "color": 0
+  },
+  "0003": {
+    "type": "enemy",
+    "movement_type": "around",
+    "clockwise": true,
+    "circle_center": [10, 6],
+    "init_pos": [4.5, 6],
+    "speed": 0.2,
+    "color": 0
+  },
+  "0004": {
+    "type": "enemy",
+    "movement_type": "around",
+    "clockwise": true,
+    "circle_center": [10, 6],
+    "init_pos": [2.5, 6],
+    "speed": 0.2,
+    "color": 0
+  },
+  "0005": {
+    "type": "enemy",
+    "movement_type": "around",
+    "clockwise": true,
+    "circle_center": [10, 6],
+    "init_pos": [10, 7.5],
+    "speed": 0.2,
+    "color": 0
+  },
+  "0006": {
+    "type": "enemy",
+    "movement_type": "around",
+    "clockwise": true,
+    "circle_center": [10, 6],
+    "init_pos": [10, 9.5],
+    "speed": 0.2,
+    "color": 0
+  },
+  "0007": {
+    "type": "enemy",
+    "movement_type": "around",
+    "clockwise": true,
+    "circle_center": [10, 6],
+    "init_pos": [10, 11.5],
+    "speed": 0.2,
+    "color": 0
+  },
+  "0008": {
+    "type": "enemy",
+    "movement_type": "around",
+    "clockwise": true,
+    "circle_center": [10, 6],
+    "init_pos": [10, 13.5],
+    "speed": 0.2,
+    "color": 0
+  },
+  "0009": {
+    "type": "enemy",
+    "movement_type": "around",
+    "clockwise": true,
+    "circle_center": [10, 6],
+    "init_pos": [11.5, 6],
+    "speed": 0.2,
+    "color": 0
+  },
+  "0010": {
+    "type": "enemy",
+    "movement_type": "around",
+    "clockwise": true,
+    "circle_center": [10, 6],
+    "init_pos": [13.5, 6],
+    "speed": 0.2,
+    "color": 0
+  },
+  "0011": {
+    "type": "enemy",
+    "movement_type": "around",
+    "clockwise": true,
+    "circle_center": [10, 6],
+    "init_pos": [15.5, 6],
+    "speed": 0.2,
+    "color": 0
+  },
+  "0012": {
+    "type": "enemy",
+    "movement_type": "around",
+    "clockwise": true,
+    "circle_center": [10, 6],
+    "init_pos": [17.5, 6],
+    "speed": 0.2,
+    "color": 0
+  },
+  "0013": {
+    "type": "enemy",
+    "movement_type": "around",
+    "clockwise": true,
+    "circle_center": [10, 6],
+    "init_pos": [10, 4.5],
+    "speed": 0.2,
+    "color": 0
+  },
+  "0014": {
+    "type": "enemy",
+    "movement_type": "around",
+    "clockwise": true,
+    "circle_center": [10, 6],
+    "init_pos": [10, 2.5],
+    "speed": 0.2,
+    "color": 0
+  },
+  "0015": {
+    "type": "enemy",
+    "movement_type": "around",
+    "clockwise": true,
+    "circle_center": [10, 6],
+    "init_pos": [10, 0.5],
+    "speed": 0.2,
+    "color": 0
+  },
+  "0016": {
+    "type": "enemy",
+    "movement_type": "around",
+    "clockwise": true,
+    "circle_center": [10, 6],
+    "init_pos": [10, -1.5],
+    "speed": 0.2,
+    "color": 0
+  }
+}
