@@ -7,7 +7,7 @@ from configparser import ConfigParser
 pygame.init()
 config = ConfigParser()
 config.read("options.ini")
-mainsurf = pygame.display.set_mode((640, 480))
+mainsurf = pygame.display.set_mode((int(config["General"]["window_width"]), int(config["General"]["window_height"])))
 pygame.display.set_caption("ddddd")
 clock = pygame.time.Clock()
 map_number = 0
@@ -26,8 +26,9 @@ while True:
             case "around":
                 enemies.add([Enemy(i["init_pos"], i["movement_type"], i["color"], i["speed"], circle_center=i["circle_center"])])
     while True:
-        mainsurf.fill(list(map(int, config["Colors"]["background"].split(", "))))
-        mainsurf.blit(cur_map_surface, (0, 0))
+        mainsurf.fill([int(i) for i in config["Colors"]["background"].split(", ")])
+        mainsurf.blit(cur_map_surface, ((int(config["General"]["window_width"]) - cur_map.map_pixel_width) // 2,
+                                        (int(config["General"]["window_height"]) - cur_map.map_pixel_height) // 2))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit()

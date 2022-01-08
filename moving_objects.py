@@ -47,7 +47,6 @@ class Player(Gameobject):
     def update(self, checkpoints: list[pygame.Rect], finish_tiles: list[pygame.Rect], coins: pygame.sprite.Group):
         for i in checkpoints:
             if i.colliderect(self): self.respawn_pos = i.center
-        self.next_level = False
         for i in finish_tiles:
             self.next_level = self.rect.colliderect(i) and not coins.sprites()
             if self.next_level: break
