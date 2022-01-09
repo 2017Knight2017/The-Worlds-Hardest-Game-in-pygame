@@ -1,3 +1,4 @@
-/venv/
+/src/venv/
 /.idea/
-/options.ini
+/src/options.ini
+"/start The World's Hardest Game.bat"
