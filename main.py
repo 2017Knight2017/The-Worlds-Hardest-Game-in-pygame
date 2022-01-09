@@ -1,5 +1,6 @@
 from moving_objects import *
 from map import Map
+from topbar import Topbar
 import pygame
 from configparser import ConfigParser
 
@@ -8,13 +9,16 @@ pygame.init()
 config = ConfigParser()
 config.read("options.ini")
 mainsurf = pygame.display.set_mode((int(config["General"]["window_width"]), int(config["General"]["window_height"])))
-pygame.display.set_caption("ddddd")
+pygame.display.set_caption("The World's Hardest Game")
 clock = pygame.time.Clock()
+topbar = Topbar()
 map_number = 0
+death_count = 0
 plr = pygame.sprite.GroupSingle()
 
 while True:
-    cur_map = Map(map_number)
+    try: cur_map = Map(map_number)
+    except FileNotFoundError: cur_map = Map(map_number := 0)
     cur_map_surface = cur_map.generateSurface()
     plr.add(Player(cur_map.spawn_tile.center if plr.sprite is None or plr.sprite.respawn_pos is None or plr.sprite.next_level else plr.sprite.respawn_pos))
     coins = pygame.sprite.Group([Coin(i) for i in cur_map.coins_coords])
@@ -70,6 +74,7 @@ while True:
 
         pygame.sprite.spritecollide(plr.sprite, coins, True)
         if pygame.sprite.spritecollide(plr.sprite, enemies, False):
+            death_count += 1
             break
 
         if plr.sprite.next_level or a:
@@ -82,5 +87,7 @@ while True:
         enemies.draw(mainsurf)
         coins.draw(mainsurf)
         plr.draw(mainsurf)
+        topbar.update(cur_map.map_name, death_count)
+        mainsurf.blit(topbar.surface, (0, 0))
         clock.tick(int(config["General"]["fps"]))
         pygame.display.update()
