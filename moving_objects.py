@@ -94,17 +94,28 @@ class Enemy(Gameobject):
         if self.key_positions[self.state][0] == self.key_positions[next_state][0]:
             if self.key_positions[self.state][1] < self.key_positions[next_state][1]:
                 self.true_coords[1] += self.speed
+                self.rect.y = self.true_coords[1]
+                if self.rect.centery >= self.key_positions[next_state][1]:
+                    self.state = next_state
             elif self.key_positions[self.state][1] > self.key_positions[next_state][1]:
                 self.true_coords[1] -= self.speed
+                self.rect.y = self.true_coords[1]
+                if self.rect.centery <= self.key_positions[next_state][1]:
+                    self.state = next_state
             self.rect.y = self.true_coords[1]
         elif self.key_positions[self.state][1] == self.key_positions[next_state][1]:
             if self.key_positions[self.state][0] < self.key_positions[next_state][0]:
                 self.true_coords[0] += self.speed
+                self.rect.x = self.true_coords[0]
+                if self.rect.centerx >= self.key_positions[next_state][0]:
+                    self.state = next_state
             elif self.key_positions[self.state][0] > self.key_positions[next_state][0]:
                 self.true_coords[0] -= self.speed
-            self.rect.x = self.true_coords[0]
-        if self.rect.center == self.key_positions[next_state]:
-            self.state = next_state
+                self.rect.x = self.true_coords[0]
+                if self.rect.centerx <= self.key_positions[next_state][0]:
+                    self.state = next_state
+        #if self.rect.center == self.key_positions[next_state]:
+        #    self.state = next_state
 
     def around(self):
         self.true_coords = (self.radius * math.cos(self.shift) + self.circle_center[0],

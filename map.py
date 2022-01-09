@@ -18,7 +18,6 @@ class Map:
     def __init__(self, map_number: int):
         self.tileset = pygame.image.load(Map.config["Tilemap"]["tilemap_path"]).convert_alpha()
         self.map_number = map_number
-        self.dynamic_map = []
         self.walls_tiles = []
         self.spawn_tile = None
         self.checkpoint_tiles = []
@@ -33,11 +32,11 @@ class Map:
 
     def parseMap(self):
         map_name = f"MAP{'0' * (self.map_number < 10)}{self.map_number}"
-        with open(f"maps/{map_name}/{map_name}-static.map", "r") as static_map:
-            self.map_tile_width, self.map_tile_height = map(int, static_map.readline().split("x"))
+        with open(f"maps/{map_name}/{map_name}-static.map", "r") as raw_static_map:
+            self.map_tile_width, self.map_tile_height = map(int, raw_static_map.readline().split("x"))
             self.map_pixel_width, self.map_pixel_height = self.tile_pixel_width * self.map_tile_width, self.tile_pixel_height * self.map_tile_height
             for _ in range(self.map_tile_height):
-                self.static_map.append(static_map.readline().split())
+                self.static_map.append(raw_static_map.readline().split())
         with open(f"maps/{map_name}/{map_name}-dynamic.json", "r") as raw_dynamic_map:
             dynamic_map = load(raw_dynamic_map)
             for i in dynamic_map.keys():

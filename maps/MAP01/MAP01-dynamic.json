@@ -1,7 +1,7 @@
 {
   "0001": {
     "type": "coin",
-    "tile_pos": [9, 4]
+    "tile_pos": [10, 4]
   },
   "0002": {
     "type": "enemy",
@@ -80,6 +80,22 @@
     "movement_type": "from_to",
     "key_positions": [[13.5, 6.5], [13.5, 1.5]],
     "init_pos": [13.5, 6.5],
+    "speed": 2.0,
+    "color": 0
+  },
+  "0012": {
+    "type": "enemy",
+    "movement_type": "from_to",
+    "key_positions": [[14.5, 1.5], [14.5, 6.5]],
+    "init_pos": [14.5, 1.5],
+    "speed": 2.0,
+    "color": 0
+  },
+  "0013": {
+    "type": "enemy",
+    "movement_type": "from_to",
+    "key_positions": [[15.5, 6.5], [15.5, 1.5]],
+    "init_pos": [15.5, 6.5],
     "speed": 2.0,
     "color": 0
   }

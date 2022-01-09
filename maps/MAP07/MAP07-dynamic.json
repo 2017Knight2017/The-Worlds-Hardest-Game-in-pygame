@@ -16,7 +16,7 @@
     "movement_type": "from_to",
     "key_positions": [[1.5, 1.5], [4.5, 1.5], [4.5, 4.5], [1.5, 4.5]],
     "init_pos": [1.5, 1.5],
-    "speed": 1.5,
+    "speed": 1.8,
     "color": 0
   },
   "0005": {
@@ -24,7 +24,7 @@
     "movement_type": "from_to",
     "key_positions": [[1.5, 4.5], [4.5, 4.5], [4.5, 7.5], [1.5, 7.5]],
     "init_pos": [1.5, 4.5],
-    "speed": 1.5,
+    "speed": 1.8,
     "color": 0
   },
   "0006": {
@@ -32,7 +32,7 @@
     "movement_type": "from_to",
     "key_positions": [[1.5, 7.5], [4.5, 7.5], [4.5, 10.5], [1.5, 10.5]],
     "init_pos": [1.5, 7.5],
-    "speed": 1.5,
+    "speed": 1.8,
     "color": 0
   },
   "0007": {
@@ -40,7 +40,7 @@
     "movement_type": "from_to",
     "key_positions": [[10.5, 1.5], [7.5, 1.5], [7.5, 4.5], [10.5, 4.5]],
     "init_pos": [10.5, 1.5],
-    "speed": 1.5,
+    "speed": 1.8,
     "color": 0
   },
   "0008": {
@@ -48,7 +48,7 @@
     "movement_type": "from_to",
     "key_positions": [[10.5, 4.5], [7.5, 4.5], [7.5, 7.5], [10.5, 7.5]],
     "init_pos": [10.5, 4.5],
-    "speed": 1.5,
+    "speed": 1.8,
     "color": 0
   },
   "0009": {
@@ -56,7 +56,7 @@
     "movement_type": "from_to",
     "key_positions": [[10.5, 7.5], [7.5, 7.5], [7.5, 10.5], [10.5, 10.5]],
     "init_pos": [10.5, 7.5],
-    "speed": 1.5,
+    "speed": 1.8,
     "color": 0
   },
   "0010": {

@@ -29,9 +29,14 @@ while True:
         mainsurf.fill([int(i) for i in config["Colors"]["background"].split(", ")])
         mainsurf.blit(cur_map_surface, ((int(config["General"]["window_width"]) - cur_map.map_pixel_width) // 2,
                                         (int(config["General"]["window_height"]) - cur_map.map_pixel_height) // 2))
+        a = False
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                exit()
+            match event.type:
+                case pygame.QUIT:
+                    exit()
+                case pygame.MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        a = True
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
@@ -67,7 +72,8 @@ while True:
         if pygame.sprite.spritecollide(plr.sprite, enemies, False):
             break
 
-        if plr.sprite.next_level:
+        if plr.sprite.next_level or a:
+            plr.empty()
             map_number += 1
             break
 
