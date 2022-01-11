@@ -1,19 +1,19 @@
 {
   "0001": {
         "type": "coin",
-        "tile_pos": [4.5, 1.5]
+        "init_pos": [4.5, 1.5]
     },
   "0002": {
         "type": "coin",
-        "tile_pos": [4.5, 8.5]
+        "init_pos": [4.5, 8.5]
     },
   "0003": {
         "type": "coin",
-        "tile_pos": [15.5, 8.5]
+        "init_pos": [15.5, 8.5]
     },
   "0004": {
         "type": "coin",
-        "tile_pos": [15.5, 1.5]
+        "init_pos": [15.5, 1.5]
     },
   "0005": {
     "type": "enemy",

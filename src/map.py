@@ -31,16 +31,16 @@ class Map:
         self.parseMap()
 
     def parseMap(self):
-        with open(f"maps/{self.map_name}/{self.map_name}-static.map", "r") as raw_static_map:
+        with open(f"src/maps/{self.map_name}/{self.map_name}-static.map", "r") as raw_static_map:
             self.map_tile_width, self.map_tile_height = map(int, raw_static_map.readline().split("x"))
             self.map_pixel_width, self.map_pixel_height = self.tile_pixel_width * self.map_tile_width, self.tile_pixel_height * self.map_tile_height
             for _ in range(self.map_tile_height):
                 self.static_map.append(raw_static_map.readline().split())
-        with open(f"maps/{self.map_name}/{self.map_name}-dynamic.json", "r") as raw_dynamic_map:
+        with open(f"src/maps/{self.map_name}/{self.map_name}-dynamic.json", "r") as raw_dynamic_map:
             dynamic_map = load(raw_dynamic_map)
             for i in dynamic_map.keys():
                 if dynamic_map[i]["type"] == "coin":
-                    self.coins_coords.append(self.normalizeCoords(*dynamic_map[i]["tile_pos"], dynamic=True))
+                    self.coins_coords.append(self.normalizeCoords(*dynamic_map[i]["init_pos"], dynamic=True))
                 elif dynamic_map[i]["type"] == "enemy":
                     dic = {"init_pos": self.normalizeCoords(*dynamic_map[i]["init_pos"], dynamic=True),
                            "movement_type": dynamic_map[i]["movement_type"],

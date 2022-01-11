@@ -1,2 +1,1 @@
-cd src
-start .\venv\Scripts\pythonw.exe .\main.py
+start .\src\venv\Scripts\pythonw.exe .\src\main.py

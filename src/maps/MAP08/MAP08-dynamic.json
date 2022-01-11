@@ -1,8 +1,8 @@
 {
   "0001": {
-        "type": "coin",
-        "tile_pos": [18, 10]
-    },
+    "type": "coin",
+    "init_pos": [18, 10]
+  },
   "0002": {
     "type": "enemy",
     "movement_type": "from_to",
