@@ -1,7 +1,7 @@
 # Mapmaker guide
 If you want to create a new level for **The World's
 Hardest Game** you need to follow these steps:
-1. Create in the `src/maps` directory a folder. It must
+1. Create in the `/maps` directory a folder. It must
 be named like `MAPxx`, where xx is the next number
 of map after the last existing one in there.
 2. Create two map files in it: `MAPxx-static.map` and
@@ -32,7 +32,7 @@ see in the table below:
 |   1    | Default tile, player can go through |
 |   2    | Checkpoint tiles                    |
 |   3    | Spawn tile                          |
- |   4    | Finish tiles                        |
+|   4    | Finish tiles                        |
 
 Every static map must:
 - be surrounded by walls.
@@ -109,8 +109,8 @@ the distance between `init_pos` and `circle_center`.
 one generic coordinate with each other.
 
 ### Colors
-Every enemy has the `color` attribute. In dependance on it,
-the enemy will different colors:
+Every enemy has a `color` attribute, which elaborates
+the color of its appearance:
 
 |     value      | color  |
 |:--------------:|:------:|
